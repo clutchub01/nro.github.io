@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Reform Organization</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Inter', sans-serif;
+            /* Can swap to Merriweather for serif headings if desired */
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #047857;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #065f46;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-white text-slate-800 antialiased">
+
+    <!-- Navigation -->
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                <img src="nro-logo.png" alt="NRO Logo"
+                    class="w-10 h-10 bg-emerald-700 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">
+                <div id="logo-text"
+                    class="font-bold text-xl tracking-tight leading-none text-white transition-colors duration-300">
+                    Northern Reform<br />
+                    <span id="logo-subtitle" class="text-amber-400">Organization</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" onclick="navigateTo('home')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="home">Home</a>
+                <a href="#" onclick="navigateTo('about')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="about">About</a>
+                <!-- Added Leadership Link -->
+                <a href="#" onclick="navigateTo('leadership')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="leadership">Leadership</a>
+                <a href="#" onclick="navigateTo('programs')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="programs">Programs</a>
+                <a href="#" onclick="navigateTo('projects')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="projects">Projects</a>
+                <a href="#" onclick="navigateTo('membership')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="membership">Membership</a>
+                <button
+                    class="bg-amber-400 text-emerald-950 hover:bg-amber-500 shadow-md px-6 py-2 rounded-full font-medium transition-all duration-300 text-sm">
+                    Donate Now
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-white transition-colors duration-300">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 flex flex-col space-y-4 border-t border-gray-100">
+            <a href="#" onclick="navigateTo('home'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Home</a>
+            <a href="#" onclick="navigateTo('about'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">About</a>
+            <a href="#" onclick="navigateTo('leadership'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Leadership</a>
+            <a href="#" onclick="navigateTo('programs'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Programs</a>
+            <a href="#" onclick="navigateTo('projects'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Projects</a>
+            <a href="#" onclick="navigateTo('membership'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Membership</a>
+            <button
+                class="w-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg px-6 py-3 rounded-full font-medium transition-all duration-300">
+                Donate Now
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ==================== HOME PAGE ==================== -->
+        <section id="home" class="page-section active">
+            <!-- Hero -->
+            <div class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-emerald-900">
+                <div class="absolute inset-0 overflow-hidden">
+                    <div
+                        class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-800 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse">
+                    </div>
+                    <div
+                        class="absolute top-1/2 -left-24 w-72 h-72 bg-amber-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30">
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-1/4 w-80 h-80 bg-emerald-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50">
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-white space-y-6">
+                        <div
+                            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                            <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+                            <span class="text-sm font-medium text-emerald-50">Mobilizing for a New Nigeria</span>
+                        </div>
+
+                        <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+                            Instituting <span class="text-amber-400">Reform</span>,<br />
+                            Preserving <span class="text-emerald-200">Heritage</span>.
+                        </h1>
+
+                        <p class="text-lg md:text-xl text-emerald-100 max-w-lg leading-relaxed">
+                            We bridge the gap between traditional values and modern governance through educational
+                            reconstruction, socio-legal advocacy, and economic realignment in Northern Nigeria.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <button onclick="navigateTo('membership')"
+                                class="bg-amber-400 text-emerald-950 hover:bg-amber-500 shadow-md inline-flex items-center justify-center px-6 py-3 rounded-full font-medium transition-all duration-300">
+                                Become a Member
+                            </button>
+                            <button onclick="navigateTo('programs')"
+                                class="border-2 border-emerald-200 text-emerald-100 hover:bg-white/10 inline-flex items-center justify-center px-6 py-3 rounded-full font-medium transition-all duration-300">
+                                Our Programs
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hero Card Visual -->
+                    <div class="relative hidden md:block">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-emerald-600 to-amber-500 rounded-3xl transform rotate-3 opacity-50 blur-lg">
+                        </div>
+                        <div
+                            class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-2xl">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-emerald-800/80 p-6 rounded-2xl text-white">
+                                    <i data-lucide="graduation-cap" class="w-8 h-8 text-amber-400 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1">Education</h3>
+                                    <p class="text-xs text-emerald-200">Reconstructing access via digital learning.</p>
+                                </div>
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
+                                    <i data-lucide="gavel" class="w-8 h-8 text-emerald-600 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1">Justice</h3>
+                                    <p class="text-xs text-gray-600">Protecting rights of the vulnerable.</p>
+                                </div>
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
+                                    <i data-lucide="building-2" class="w-8 h-8 text-emerald-600 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1">Economy</h3>
+                                    <p class="text-xs text-gray-600">Fiscal integrity & infrastructure.</p>
+                                </div>
+                                <div class="bg-amber-500/90 p-6 rounded-2xl text-white">
+                                    <i data-lucide="users" class="w-8 h-8 text-emerald-900 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1 text-emerald-950">Reform</h3>
+                                    <p class="text-xs text-emerald-900 font-medium">Devolution of power to states.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Strip -->
+            <div class="bg-emerald-900 text-white py-12 border-t border-emerald-800">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
+                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">10k+</div>
+                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Women
+                                Provided Legal Aid</p>
+                        </div>
+                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
+                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">9</div>
+                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Key
+                                States Impacted</p>
+                        </div>
+                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
+                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">25+</div>
+                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Federal
+                                Programs Digitized</p>
+                        </div>
+                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
+                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">2002</div>
+                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">
+                                Advocacy Established</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Preview -->
+            <section class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <div class="flex flex-col lg:flex-row items-center gap-16">
+                        <div class="lg:w-1/2 relative">
+                            <div class="w-full h-96 bg-gray-300 rounded-2xl overflow-hidden shadow-xl relative group">
+                                <div
+                                    class="absolute inset-0 bg-emerald-900/10 flex items-center justify-center transition-colors group-hover:bg-emerald-900/20">
+                                    <img src="nro.jpg" alt="NRO Team"
+                                        class="w-full h-full object-cover rounded-2xl opacity-90">
+                                </div>
+                            </div>
+                            <!-- Modified Quote Card: Fixed for Mobile Flow & Desktop Position -->
+                            <div
+                                class="relative mt-6 mx-4 md:absolute md:mt-0 md:mx-0 md:-bottom-10 md:-right-10 bg-white p-6 md:p-8 rounded-xl shadow-lg md:max-w-xs border border-gray-100">
+                                <p class="text-emerald-800 italic font-medium">"Loyalty and devotion to a nation that
+                                    prioritizes identity over colonial interests."</p>
+                                <p class="text-gray-500 text-sm mt-2">- Reformist Principles, 1908</p>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 mt-12 md:mt-0">
+                            <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm mb-2 block">Who We
+                                Are</span>
+                            <h2 class="text-4xl font-bold text-gray-900 mb-6">A Multi-Faceted Movement for Modernization
+                            </h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                The Northern Reform Organization (NRO) is not a singular entity but a coalition of
+                                academic leadership, socio-legal advocacy, and political realignment. We emerged from a
+                                historical necessity to address developmental disparities and integrate Northern Nigeria
+                                into the global digital landscape.
+                            </p>
+                            <p class="text-gray-600 leading-relaxed mb-8">
+                                From the early nationalist movements of 1908 to today's digital education initiatives,
+                                we champion transparency, local representation, and the modernization of traditional
+                                institutions.
+                            </p>
+                            <button onclick="navigateTo('about')"
+                                class="bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg px-6 py-3 rounded-full font-medium transition-all duration-300">
+                                Discover Our History
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ==================== ABOUT PAGE ==================== -->
+        <section id="about" class="page-section">
+            <div class="bg-gray-50 pt-32 pb-20">
+                <div class="container mx-auto px-6">
+                    <div class="mb-12 text-center">
+                        <span class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our History &
+                            Mission</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">About the Organization
+                        </h2>
+                        <div
+                            class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
+                        </div>
+                    </div>
+
+                    <div class="max-w-4xl mx-auto space-y-8 text-lg text-gray-600">
+                        <p>
+                            The <strong>Northern Reform Organization</strong> traces its ideological roots to the early
+                            20th-century nationalist movements that sought to challenge hegemony and advocate for
+                            self-determination. In 1908, a leadership alliance was formed to protect the welfare of
+                            residents against inequitable taxation—a principle we uphold today.
+                        </p>
+                        <p>
+                            As these ideas moved northward, they were adapted by a burgeoning class of educated elites.
+                            Today, we represent the convergence of academic rigor, legal advocacy, and political
+                            transparency.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-8 mt-12">
+                            <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
+                                <h3 class="text-xl font-bold text-emerald-900 mb-4 flex items-center gap-2">
+                                    <i data-lucide="eye" class="w-5 h-5 text-amber-500"></i> Our Vision
+                                </h3>
+                                <p class="text-base">To modernize Northern Nigeria without sacrificing its cultural and
+                                    religious identity, creating a region defined by digital literacy, legal equity, and
+                                    economic prosperity.</p>
+                            </div>
+                            <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
+                                <h3 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2">
+                                    <i data-lucide="target" class="w-5 h-5 text-emerald-500"></i> Our Mission
+                                </h3>
+                                <p class="text-base">To integrate Northern Nigeria into the global digital and economic
+                                    landscape through educational reconstruction, socio-legal advocacy for the
+                                    vulnerable, and ethical political realignment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== LEADERSHIP PAGE ==================== -->
+        <section id="leadership" class="page-section">
+            <div class="bg-white pt-32 pb-20">
+                <div class="container mx-auto px-6">
+                    <div class="mb-12 text-center">
+                        <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm mb-2 block">Board of
+                            Trustees</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Our Distinguished
+                            Leadership</h2>
+                        <div
+                            class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
+                        </div>
+                    </div>
+
+                    <!-- Leadership Grid Container (Populated by JS) -->
+                    <div id="leadership-grid"
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Content rendered by script below -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== BIO MODAL ==================== -->
+        <div id="bio-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title"
+            role="dialog" aria-modal="true">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
+                    onclick="closeModal()"></div>
+
+                <!-- Modal Panel -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div
+                    class="relative inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-8">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-2xl leading-6 font-bold text-gray-900 mb-1" id="modal-name"></h3>
+                                <p class="text-emerald-600 font-bold uppercase tracking-wide text-sm mb-6"
+                                    id="modal-title"></p>
+                                <div class="mt-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                                    <p class="text-base text-gray-600 text-justify leading-relaxed whitespace-pre-line"
+                                        id="modal-bio"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button"
+                            class="w-full inline-flex justify-center rounded-full border border-transparent shadow-sm px-6 py-2 bg-emerald-700 text-base font-medium text-white hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
+                            onclick="closeModal()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PROGRAMS PAGE ==================== -->
+        <section id="programs" class="page-section">
+            <div class="pt-32 pb-20 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="mb-12 text-center">
+                        <span class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our Strategic
+                            Pillars</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Comprehensive Reform
+                            Initiatives</h2>
+                        <div
+                            class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="book-open"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Educational Reconstruction</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Pivoting to digital-first education
+                                and 'Education for All' (EFA). We support initiatives like the National Open University
+                                to democratize access across Kano, Borno, and Yobe.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="scale"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Socio-Legal Advocacy</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Through partnerships with
+                                organizations like WRAPA, we advocate for the Violence Against Persons Prohibition
+                                (VAPP) Law and provide legal aid to the vulnerable.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                        <!-- Card 3 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="globe"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Digital Government</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Spearheading the Nigerian Government
+                                Digital Service (NGDS) to digitize top federal programs and ensure transparency in the
+                                energy and agricultural sectors.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                        <!-- Card 4 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="building-2"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Institutional Integrity</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Promoting the 'R-E-C-I-T-E' core
+                                values in public institutions like the Debt Management Office to ensure prudent fiscal
+                                management.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                        <!-- Card 5 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="lightbulb"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Energy Reform</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Advocating for the liberalization of
+                                power generation to fuel industrialization and resolving infrastructure bottlenecks in
+                                the North.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                        <!-- Card 6 -->
+                        <div
+                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                                <i data-lucide="users"
+                                    class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Political Realignment</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Supporting the devolution of power
+                                to federating states to bring governance closer to the people and restore ethical
+                                leadership.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
+                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PROJECTS PAGE ==================== -->
+        <section id="projects" class="page-section">
+            <div class="py-20 bg-emerald-50 pt-32">
+                <div class="container mx-auto px-6">
+                    <div class="mb-12 text-center">
+                        <span
+                            class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Interventions</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Impact in Action</h2>
+                        <div
+                            class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
+                        </div>
+                    </div>
+
+                    <div class="space-y-12">
+                        <!-- Project 1 -->
+                        <div
+                            class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 grid md:grid-cols-12">
+                            <div class="md:col-span-5 bg-gray-200 min-h-[300px] relative">
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-gray-500 bg-emerald-100">
+                                    <span class="bg-white/50 px-4 py-2 rounded-lg">[Image: Classroom in Jigawa]</span>
+                                </div>
+                            </div>
+                            <div class="md:col-span-7 p-10 flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span
+                                        class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold uppercase">Education</span>
+                                    <span class="text-gray-400 text-sm">2011 - Present</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-4">The Education Ledger Project (ELP)
+                                </h3>
+                                <p class="text-gray-600 mb-6">
+                                    A data-driven initiative to determine the precise cost of bringing children into
+                                    schools in states like Kano, Jigawa, and Sokoto. Moving beyond rhetoric to address
+                                    systemic barriers to literacy through fiscal planning.
+                                </p>
+                                <div class="flex gap-6 border-t border-gray-100 pt-6">
+                                    <div>
+                                        <span class="block text-2xl font-bold text-emerald-700">9</span>
+                                        <span class="text-sm text-gray-500">States Targeted</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-bold text-emerald-700">100%</span>
+                                        <span class="text-sm text-gray-500">Data Transparency</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div
+                            class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 grid md:grid-cols-12">
+                            <div class="md:col-span-7 p-10 flex flex-col justify-center order-2 md:order-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span
+                                        class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase">Human
+                                        Rights</span>
+                                    <span class="text-gray-400 text-sm">Ongoing</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-4">Legal Access & VAPP Implementation
+                                </h3>
+                                <p class="text-gray-600 mb-6">
+                                    Bridging the gap between formal legal protections and lived reality. We mobilize
+                                    focal persons in grassroots areas to provide counseling and legal defense for women,
+                                    enforcing the VAPP Law in culturally conservative regions.
+                                </p>
+                                <div class="flex gap-6 border-t border-gray-100 pt-6">
+                                    <div>
+                                        <span class="block text-2xl font-bold text-emerald-700">10k+</span>
+                                        <span class="text-sm text-gray-500">Beneficiaries</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-bold text-emerald-700">36</span>
+                                        <span class="text-sm text-gray-500">States Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md:col-span-5 bg-gray-200 min-h-[300px] relative order-1 md:order-2">
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-gray-500 bg-amber-50">
+                                    <span class="bg-white/50 px-4 py-2 rounded-lg">[Image: Legal Advocacy
+                                        Workshop]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MEMBERSHIP PAGE ==================== -->
+        <section id="membership" class="page-section">
+            <div class="bg-emerald-900 text-white relative overflow-hidden pt-32 pb-20">
+                <div
+                    class="absolute top-0 right-0 w-1/2 h-full bg-emerald-800 transform -skew-x-12 translate-x-20 opacity-50">
+                </div>
+                <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+                    <h2 class="text-4xl font-bold mb-6">Join the Alliance for a New Nigeria</h2>
+                    <p class="text-emerald-100 text-lg mb-10">
+                        Become part of a network of professionals, academics, and advocates dedicated to restoring the
+                        "glory path" through ethical reformation and civic engagement.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
+                            <h4 class="font-bold mb-2">Access Research</h4>
+                            <p class="text-sm text-emerald-200">Exclusive access to education sector analysis reports.
+                            </p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
+                            <h4 class="font-bold mb-2">Network</h4>
+                            <p class="text-sm text-emerald-200">Connect with reformist leaders and traditional rulers.
+                            </p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
+                            <h4 class="font-bold mb-2">Impact</h4>
+                            <p class="text-sm text-emerald-200">Directly support our legal aid and literacy projects.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-6 py-12">
+                <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+                    <h3 class="text-2xl font-bold text-center mb-6">Register Interest</h3>
+                    <form class="space-y-4"
+                        onsubmit="event.preventDefault(); alert('Application submitted successfully!');">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="First Name"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" placeholder="Last Name"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <input type="email" placeholder="Email Address"
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <select
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-500">
+                            <option>Select Membership Type</option>
+                            <option>Student / Youth</option>
+                            <option>Professional</option>
+                            <option>Corporate Partner</option>
+                        </select>
+                        <button type="submit"
+                            class="w-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg px-6 py-3 rounded-full font-medium transition-all duration-300">
+                            Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div
+                            class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center text-white font-bold">
+                            N</div>
+                        <span class="text-white font-bold text-lg">NRO</span>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-6">
+                        Advancing socio-political evolution in Northern Nigeria through education, justice, and ethical
+                        governance.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
+                                data-lucide="twitter" class="w-4 h-4"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
+                                data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
+                                data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Initiatives</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-emerald-400">Education for All</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Legal Aid Clinic</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Digital Government Service</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Debt Management Integrity</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Resources</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-emerald-400">NRO Annual Reports</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Reform Manifesto</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Events Calendar</a></li>
+                        <li><a href="#" class="hover:text-emerald-400">Blog & Updates</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Contact</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
+                            <span>No. 45 Administrative Way,<br />Kano, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
+                            <span>secretariat@nro-ng.org</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
+                            <span>+234 800 REFORM NG</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 Northern Reform Organization. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                    <a href="#" class="hover:text-white">Cookie Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Leadership Data Population ---
+        const boardMembers = [
+            {
+                name: "Sir Ahmadu Bello",
+                title: "Sardauna of Sokoto / Premier of Northern Nigeria",
+                bio: "Sir Ahmadu Bello (1910–1966) was a Nigerian statesman and the Sardauna of Sokoto. He served as Premier of Northern Nigeria from 1954 to 1966 and co-founded the Northern People's Congress (NPC). Bello championed education, regional development, and modernization while preserving Islamic traditions. He was assassinated during the 1966 military coup, becoming a symbol of Northern political leadership."
+            },
+            {
+                name: "Alhaji Abubakar Tafawa Balewa",
+                title: "Prime Minister of Nigeria",
+                bio: "Alhaji Abubakar Tafawa Balewa (1912–1966) was Nigeria’s first and only Prime Minister. A key figure in independence negotiations, he emphasized national unity while advocating for Northern interests. Balewa was known for his diplomatic and moderate leadership. He was assassinated in the 1966 coup alongside Ahmadu Bello."
+            },
+            {
+                name: "Alhaji Aminu Kano",
+                title: "Political Leader / Reformer",
+                bio: "Alhaji Aminu Kano (1920–1983) founded the Northern Elements Progressive Union (NEPU) and was a radical populist politician. He championed the rights of the talakawa (common people), promoted education reform, and advocated for social justice and socialist principles in Northern Nigeria. His leadership challenged entrenched feudal political structures."
+            },
+            {
+                name: "Shehu Shagari",
+                title: "President of Nigeria",
+                bio: "Shehu Shagari (1925–2018) was Nigeria’s first Executive President, serving from 1979 to 1983 during the Second Republic. His administration focused on agricultural development, education, and national integration. Shagari was overthrown in the 1983 military coup but is remembered for promoting civilian governance and democratic ideals in Northern Nigeria."
+            },
+            {
+                name: "Yakubu Gowon",
+                title: "Head of State",
+                bio: "General Yakubu Gowon (born 1934) was Nigeria’s Head of State from 1966 to 1975. He led the country during the Civil War (1967–1970) and promoted the principle of 'No victor, no vanquished' to ensure reconciliation. Gowon focused on infrastructure development, national unity, and post-war reconstruction."
+            },
+            {
+                name: "Murtala Mohammed",
+                title: "Military Head of State",
+                bio: "General Murtala Mohammed (1938–1976) served as Nigeria’s Military Head of State from 1975 until his assassination in 1976. He was known for bold anti-corruption reforms, bureaucratic restructuring, and decentralization. His brief tenure left a lasting impact on governance efficiency and public sector accountability."
+            },
+            {
+                name: "Muhammadu Buhari",
+                title: "Military Head of State / President",
+                bio: "General Muhammadu Buhari (born 1942) ruled as Military Head of State from 1983 to 1985 and later as elected President from 2015 to 2023. He is known for his strict discipline, anti-corruption campaigns, and efforts to strengthen security. Buhari has been a central figure in Northern Nigerian politics for decades."
+            },
+            {
+                name: "Ibrahim Babangida",
+                title: "Military President",
+                bio: "General Ibrahim Babangida (born 1941) was Nigeria’s Military President from 1985 to 1993. He introduced the Structural Adjustment Program (SAP), attempted political liberalization, and controversially annulled the 1993 presidential election, shaping Nigeria’s political trajectory in the late 20th century."
+            },
+            {
+                name: "Sani Abacha",
+                title: "Military Head of State",
+                bio: "General Sani Abacha (1943–1998) was Nigeria’s Military Head of State from 1993 until his death in 1998. His regime was marked by authoritarian rule, political repression, and significant corruption, but also by economic stabilization initiatives. Abacha remains a controversial figure in Nigerian history."
+            },
+            {
+                name: "Usman dan Fodio",
+                title: "Religious & Traditional Leader",
+                bio: "Usman dan Fodio (1754–1817) was an Islamic scholar, reformer, and founder of the Sokoto Caliphate. He led the Fulani Jihad in 1804, establishing one of West Africa’s largest pre-colonial states. His religious and political legacy shaped Northern Nigeria’s governance and Islamic scholarship for generations."
+            },
+            {
+                name: "Muhammadu Sanusi I",
+                title: "Sultan of Sokoto",
+                bio: "Muhammadu Sanusi I (1881–1959) served as Sultan of Sokoto from 1957 to 1988. As a traditional and religious leader, he was influential in promoting Islamic education, jurisprudence, and socio-political guidance in Northern Nigeria. He was also the grandfather of Sanusi Lamido Sanusi."
+            },
+            {
+                name: "Ado Bayero",
+                title: "Emir of Kano",
+                bio: "Ado Bayero (1930–2014) was the Emir of Kano from 1963 to 2014. He was one of Nigeria’s longest-serving traditional rulers, promoting interfaith harmony, civic development, and cultural preservation. Bayero played a unifying role in Kano State and Northern Nigeria at large."
+            },
+            {
+                name: "Abubakar Gumi",
+                title: "Islamic Scholar / Cleric",
+                bio: "Sheikh Abubakar Gumi (1924–1992) was a prominent Islamic cleric and reformist in Northern Nigeria. He advocated Sunni orthodoxy, opposed certain Sufi practices, and influenced modern Islamic education and jurisprudence in the region. Gumi’s teachings shaped religious thought and activism."
+            },
+            {
+                name: "Sir Kashim Ibrahim",
+                title: "Governor of Northern Nigeria",
+                bio: "Sir Kashim Ibrahim (1910–1990) was Governor of Northern Nigeria from 1962 to 1966. A close ally of Ahmadu Bello, he focused on administrative reforms, education, and economic development. His tenure strengthened the political and bureaucratic structures of the Northern Region."
+            },
+            {
+                name: "Alhaji Ismaila Isa Funtua",
+                title: "Media & Political Strategist",
+                bio: "Alhaji Ismaila Isa Funtua (1942–2010) was a Northern Nigerian media mogul and influential political strategist. He advised multiple Nigerian leaders, helped shape Northern political policies, and was known for philanthropy and mentorship in civil society."
+            },
+            {
+                name: "Alhaji Bashir Dalhatu",
+                title: "Politician & Business Leader",
+                bio: "Alhaji Bashir Dalhatu (born 1949) is a Northern Nigerian lawyer, politician, and businessman. He has held key positions in governance and finance, contributing to policy-making and private sector development. Dalhatu is also known for advocacy on Northern socio-economic issues."
+            },
+            {
+                name: "Hajiya Aisha I. Dankani",
+                title: "Legal Practitioner / Administrator",
+                bio: "Barrister Aisha I. Dankani is an accomplished lawyer and public administrator with decades of service in Nigeria’s judiciary and federal civil service. She held Director-level positions in multiple ministries, contributed to legal reforms including the Child Rights Decree, and served on national boards such as the Bank of Industry and Nigeria Customs."
+            },
+            {
+                name: "Alhaji Abubakar Sadiq Umar",
+                title: "Secretary General",
+                bio: "Alhaji Abubakar Sadiq Umar is a Northern Nigerian public servant and administrator who has held leadership roles in policy coordination and governance. He has contributed to institutional reforms and regional development initiatives."
+            },
+            {
+                name: "Sen. Usman Umar Kibiya",
+                title: "Politician / BOT Member",
+                bio: "Senator Usman Umar Kibiya is a Northern Nigerian politician and board member in multiple institutions. He has played active roles in legislative processes and community development programs."
+            },
+            {
+                name: "Alhaji Ahmadu Gemade",
+                title: "Minister / Politician",
+                bio: "Alhaji Ahmadu Gemade is a Northern Nigerian politician and former minister. He contributed to national policy-making and governance, with focus on economic development and agricultural reforms."
+            },
+            {
+                name: "Alhaji Abubakar Rimi",
+                title: "Governor of Kano State",
+                bio: "Alhaji Abubakar Rimi (1940–2010) was a Northern Nigerian politician and reformist governor of Kano State (1979–1983). He promoted modernization, education, and transparency, leaving a legacy of progressive governance."
+            },
+            {
+                name: "Alhaji Bala Mohammed",
+                title: "Politician / Minister",
+                bio: "Alhaji Bala Mohammed is a Northern Nigerian politician who has served as a federal minister and contributed to governance and socio-economic policies in the region."
+            },
+            {
+                name: "Sir Muhammadu Ribadu",
+                title: "First Minister of Defence",
+                bio: "Sir Muhammadu Ribadu (1909–1965) was the first Nigerian Minister of Defence. He played a crucial role in shaping Nigeria’s early military and security policies, strengthening the federal structure, and promoting Northern political interests."
+            },
+            {
+                name: "Mallam Aminu Isa",
+                title: "Traditional Leader / Administrator",
+                bio: "Mallam Aminu Isa was a Northern Nigerian traditional leader and administrator. He contributed to local governance, community development, and preservation of cultural heritage in Northern Nigeria."
+            }
+        ];
+
+        const leadershipGrid = document.getElementById('leadership-grid');
+
+        // Function to get initials from name
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        }
+
+        // Modal Functions
+        function openModal(index) {
+            const member = boardMembers[index];
+            document.getElementById('modal-name').textContent = member.name;
+            document.getElementById('modal-title').textContent = member.title;
+            // Handle newlines if present
+            document.getElementById('modal-bio').textContent = member.bio;
+            document.getElementById('bio-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('bio-modal').classList.add('hidden');
+        }
+
+        // Render Cards
+        if (leadershipGrid) {
+            boardMembers.forEach((member, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center group";
+
+                card.innerHTML = `
+                    <div class="w-24 h-24 rounded-full bg-emerald-50 mb-4 flex items-center justify-center border-2 border-emerald-100 group-hover:border-emerald-500 transition-colors">
+                        <span class="text-xl font-bold text-emerald-700 tracking-widest">${getInitials(member.name)}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1 leading-tight">${member.name}</h3>
+                    <p class="text-sm text-emerald-600 font-medium mb-4">${member.title}</p>
+                    <button onclick="openModal(${index})" class="mt-auto text-xs font-bold text-gray-400 hover:text-amber-500 flex items-center gap-1 transition-colors uppercase tracking-wider">
+                        More <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                    </button>
+                `;
+                leadershipGrid.appendChild(card);
+            });
+            // Re-init icons for new elements
+            lucide.createIcons();
+        }
+
+
+        // Navigation Logic
+        function navigateTo(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show target section
+            document.getElementById(pageId).classList.add('active');
+
+            // Update URL hash without scrolling (unless it's a new load)
+            window.location.hash = pageId;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update Nav State
+            updateNavState(pageId);
+        }
+
+        function updateNavState(activePage) {
+            // Header styling changes based on page
+            const header = document.getElementById('main-header');
+            const logoText = document.getElementById('logo-text');
+            const logoSubtitle = document.getElementById('logo-subtitle');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const isHome = activePage === 'home';
+
+            if (!isHome) {
+                // Dark Header for content pages
+                header.classList.add('bg-white', 'shadow-md');
+                header.classList.remove('bg-transparent', 'py-5');
+                header.classList.add('py-3');
+
+                logoText.classList.remove('text-white');
+                logoText.classList.add('text-gray-900');
+
+                logoSubtitle.classList.remove('text-amber-400');
+                logoSubtitle.classList.add('text-emerald-700');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-emerald-100', 'hover:text-white');
+                    link.classList.add('text-gray-600', 'hover:text-emerald-700');
+                    if (link.dataset.page === activePage) {
+                        link.classList.add('text-emerald-700', 'font-bold');
+                    } else {
+                        link.classList.remove('text-emerald-700', 'font-bold');
+                    }
+                });
+
+                mobileBtn.classList.remove('text-white');
+                mobileBtn.classList.add('text-gray-900');
+
+            } else {
+                // Transparent Header for Home (initially) - Scroll listener handles the rest
+                // But we reset to base state if at top
+                if (window.scrollY < 50) {
+                    resetHomeHeader();
+                }
+            }
+        }
+
+        function resetHomeHeader() {
+            const header = document.getElementById('main-header');
+            const logoText = document.getElementById('logo-text');
+            const logoSubtitle = document.getElementById('logo-subtitle');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+
+            header.classList.remove('bg-white', 'shadow-md', 'py-3');
+            header.classList.add('bg-transparent', 'py-5');
+
+            logoText.classList.add('text-white');
+            logoText.classList.remove('text-gray-900');
+
+            logoSubtitle.classList.add('text-amber-400');
+            logoSubtitle.classList.remove('text-emerald-700');
+
+            navLinks.forEach(link => {
+                link.classList.add('text-emerald-100', 'hover:text-white');
+                link.classList.remove('text-gray-600', 'hover:text-emerald-700', 'text-emerald-700', 'font-bold');
+                if (link.dataset.page === 'home') {
+                    link.classList.add('font-bold', 'text-white');
+                }
+            });
+
+            mobileBtn.classList.add('text-white');
+            mobileBtn.classList.remove('text-gray-900');
+        }
+
+        // Scroll Effect for Home Page
+        window.addEventListener('scroll', () => {
+            if (window.location.hash === '#home' || window.location.hash === '') {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) {
+                    // Apply "sticky" style similar to non-home pages
+                    header.classList.add('bg-white', 'shadow-md', 'py-3');
+                    header.classList.remove('bg-transparent', 'py-5');
+
+                    document.getElementById('logo-text').classList.remove('text-white');
+                    document.getElementById('logo-text').classList.add('text-gray-900');
+
+                    document.getElementById('logo-subtitle').classList.remove('text-amber-400');
+                    document.getElementById('logo-subtitle').classList.add('text-emerald-700');
+
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-emerald-100', 'hover:text-white');
+                        link.classList.add('text-gray-600', 'hover:text-emerald-700');
+                        if (link.dataset.page === 'home') {
+                            link.classList.add('text-emerald-700', 'font-bold');
+                        }
+                    });
+
+                    document.getElementById('mobile-menu-btn').classList.remove('text-white');
+                    document.getElementById('mobile-menu-btn').classList.add('text-gray-900');
+                } else {
+                    resetHomeHeader();
+                }
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Handle initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            navigateTo(hash);
+        });
+
+    </script>
+</body>
+
+</html>
