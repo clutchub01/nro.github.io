@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="nro-logo (2).png">
 
     <style>
         body {
@@ -126,12 +127,12 @@
                 <a href="#" onclick="navigateTo('leadership')"
                     class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
                     data-page="leadership">Leadership</a>
+                <a href="#" onclick="navigateTo('chapters')"
+                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
+                    data-page="chapters">Chapters</a>
                 <a href="#" onclick="navigateTo('programs')"
                     class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
                     data-page="programs">Programs</a>
-                <a href="#" onclick="navigateTo('projects')"
-                    class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
-                    data-page="projects">Projects</a>
                 <a href="#" onclick="navigateTo('membership')"
                     class="nav-link text-sm font-medium text-emerald-100 hover:text-white transition-colors"
                     data-page="membership">Membership</a>
@@ -156,10 +157,10 @@
                 class="text-gray-800 font-medium py-2 hover:text-emerald-700">About</a>
             <a href="#" onclick="navigateTo('leadership'); toggleMobileMenu()"
                 class="text-gray-800 font-medium py-2 hover:text-emerald-700">Leadership</a>
+            <a href="#" onclick="navigateTo('chapters'); toggleMobileMenu()"
+                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Chapters</a>
             <a href="#" onclick="navigateTo('programs'); toggleMobileMenu()"
                 class="text-gray-800 font-medium py-2 hover:text-emerald-700">Programs</a>
-            <a href="#" onclick="navigateTo('projects'); toggleMobileMenu()"
-                class="text-gray-800 font-medium py-2 hover:text-emerald-700">Projects</a>
             <a href="#" onclick="navigateTo('membership'); toggleMobileMenu()"
                 class="text-gray-800 font-medium py-2 hover:text-emerald-700">Membership</a>
             <button
@@ -194,14 +195,15 @@
                             <span class="text-sm font-medium text-emerald-50">Mobilizing for a New Nigeria</span>
                         </div>
 
-                        <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-                            Instituting <span class="text-amber-400">Reform</span>,<br />
-                            Preserving <span class="text-emerald-200">Heritage</span>.
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                            Moral Re-birth, <br />
+                            Social <span class="text-amber-400">Justice</span> &<br />
+                            Political <span class="text-emerald-200">Unity</span>.
                         </h1>
 
                         <p class="text-lg md:text-xl text-emerald-100 max-w-lg leading-relaxed">
-                            We bridge the gap between traditional values and modern governance through educational
-                            reconstruction, socio-legal advocacy, and economic realignment in Northern Nigeria.
+                            We aim to restore harmony, sustain peace and economic development within the Northern Region
+                            by encouraging the people of Northern Nigeria to re-think and act morally.
                         </p>
 
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -225,24 +227,24 @@
                             class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-2xl">
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-emerald-800/80 p-6 rounded-2xl text-white">
-                                    <i data-lucide="graduation-cap" class="w-8 h-8 text-amber-400 mb-3"></i>
+                                    <i data-lucide="shield" class="w-8 h-8 text-amber-400 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1">Security</h3>
+                                    <p class="text-xs text-emerald-200">Protecting lives and properties.</p>
+                                </div>
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
+                                    <i data-lucide="sprout" class="w-8 h-8 text-emerald-600 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1">Agriculture</h3>
+                                    <p class="text-xs text-gray-600">Empowering Northern farmers.</p>
+                                </div>
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
+                                    <i data-lucide="book-open" class="w-8 h-8 text-emerald-600 mb-3"></i>
                                     <h3 class="font-bold text-xl mb-1">Education</h3>
-                                    <p class="text-xs text-emerald-200">Reconstructing access via digital learning.</p>
-                                </div>
-                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
-                                    <i data-lucide="gavel" class="w-8 h-8 text-emerald-600 mb-3"></i>
-                                    <h3 class="font-bold text-xl mb-1">Justice</h3>
-                                    <p class="text-xs text-gray-600">Protecting rights of the vulnerable.</p>
-                                </div>
-                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900">
-                                    <i data-lucide="building-2" class="w-8 h-8 text-emerald-600 mb-3"></i>
-                                    <h3 class="font-bold text-xl mb-1">Economy</h3>
-                                    <p class="text-xs text-gray-600">Fiscal integrity & infrastructure.</p>
+                                    <p class="text-xs text-gray-600">Reviewing systems for self-reliance.</p>
                                 </div>
                                 <div class="bg-amber-500/90 p-6 rounded-2xl text-white">
-                                    <i data-lucide="users" class="w-8 h-8 text-emerald-900 mb-3"></i>
-                                    <h3 class="font-bold text-xl mb-1 text-emerald-950">Reform</h3>
-                                    <p class="text-xs text-emerald-900 font-medium">Devolution of power to states.</p>
+                                    <i data-lucide="zap" class="w-8 h-8 text-emerald-900 mb-3"></i>
+                                    <h3 class="font-bold text-xl mb-1 text-emerald-950">Economy</h3>
+                                    <p class="text-xs text-emerald-900 font-medium">Power plants and SMEs.</p>
                                 </div>
                             </div>
                         </div>
@@ -251,32 +253,45 @@
             </div>
 
             <!-- Impact Strip -->
-            <div class="bg-emerald-900 text-white py-12 border-t border-emerald-800">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
-                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">10k+</div>
-                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Women
-                                Provided Legal Aid</p>
+            <div class="bg-emerald-900 text-white py-10 md:py-12 border-t border-emerald-800">
+                <div class="container mx-auto px-4 sm:px-6">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4">
+                        <div class="text-center p-2 sm:p-6 border-r border-emerald-800/30">
+                            <div class="stat-value text-3xl sm:text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono"
+                                data-target="15">0</div>
+                            <p
+                                class="text-emerald-100 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wide">
+                                Distinguished Trustees</p>
                         </div>
-                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
-                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">9</div>
-                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Key
-                                States Impacted</p>
+
+                        <div class="text-center p-2 sm:p-6 lg:border-r border-emerald-800/30">
+                            <div class="stat-value text-3xl sm:text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono"
+                                data-target="19">0</div>
+                            <p
+                                class="text-emerald-100 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wide">
+                                Northern States Covered</p>
                         </div>
-                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
-                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">25+</div>
-                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">Federal
-                                Programs Digitized</p>
+
+                        <div class="text-center p-2 sm:p-6 border-r border-emerald-800/30">
+                            <div class="stat-value text-3xl sm:text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono"
+                                data-target="20">0</div>
+                            <p
+                                class="text-emerald-100 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wide">
+                                State & FCT Chapters</p>
                         </div>
-                        <div class="text-center p-6 border-r border-emerald-800/30 last:border-0">
-                            <div class="text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono">2002</div>
-                            <p class="text-emerald-100 text-sm md:text-base font-medium uppercase tracking-wide">
-                                Advocacy Established</p>
+
+                        <div class="text-center p-2 sm:p-6">
+                            <div class="stat-value text-3xl sm:text-4xl md:text-5xl font-bold text-amber-400 mb-2 font-mono"
+                                data-target="2019">0</div>
+                            <p
+                                class="text-emerald-100 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wide">
+                                Organization Registered</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+
 
             <!-- About Preview -->
             <section class="py-20 bg-gray-50">
@@ -290,29 +305,29 @@
                                         class="w-full h-full object-cover rounded-2xl opacity-90">
                                 </div>
                             </div>
-                            <!-- Modified Quote Card: Fixed for Mobile Flow & Desktop Position -->
+                            <!-- Quote Card -->
                             <div
-                                class="relative mt-6 mx-4 md:absolute md:mt-0 md:mx-0 md:-bottom-10 md:-right-10 bg-white p-6 md:p-8 rounded-xl shadow-lg md:max-w-xs border border-gray-100">
-                                <p class="text-emerald-800 italic font-medium">"Loyalty and devotion to a nation that
-                                    prioritizes identity over colonial interests."</p>
-                                <p class="text-gray-500 text-sm mt-2">- Reformist Principles, 1908</p>
+                                class="relative mt-[-2rem] mx-4 sm:mx-8 lg:absolute lg:mt-0 lg:mx-0 lg:-bottom-10 lg:-right-10 bg-white p-5 md:p-8 rounded-xl shadow-lg lg:max-w-xs border border-gray-100 z-10">
+                                <p class="text-emerald-800 italic font-medium text-sm md:text-base">"To change
+                                    something, we need to build a new model that makes the existing model obsolete."</p>
+                                <p class="text-gray-500 text-xs md:text-sm mt-2 font-semibold">- R.B. Fuller</p>
                             </div>
+
                         </div>
                         <div class="lg:w-1/2 mt-12 md:mt-0">
                             <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm mb-2 block">Who We
                                 Are</span>
-                            <h2 class="text-4xl font-bold text-gray-900 mb-6">A Multi-Faceted Movement for Modernization
-                            </h2>
+                            <h2 class="text-4xl font-bold text-gray-900 mb-6">A Wake-Up Call for Self-Renewal</h2>
                             <p class="text-gray-600 leading-relaxed mb-6">
-                                The Northern Reform Organization (NRO) is not a singular entity but a coalition of
-                                academic leadership, socio-legal advocacy, and political realignment. We emerged from a
-                                historical necessity to address developmental disparities and integrate Northern Nigeria
-                                into the global digital landscape.
+                                Since 1999, concerned people have noticed that the Northern part of Nigeria has been on
+                                a drift towards a systematic and unabated decline. The Northern Reform
+                                Organization emerged as a collective effort to address escalating problems and
+                                challenges of Northern Nigeria.
                             </p>
                             <p class="text-gray-600 leading-relaxed mb-8">
-                                From the early nationalist movements of 1908 to today's digital education initiatives,
-                                we champion transparency, local representation, and the modernization of traditional
-                                institutions.
+                                We aim to rescue this important part of the country, once proudly considered the back
+                                bone of Nigeria's economic, social and political life, from failing and falling into the
+                                trap of disintegration.
                             </p>
                             <button onclick="navigateTo('about')"
                                 class="bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg px-6 py-3 rounded-full font-medium transition-all duration-300">
@@ -340,32 +355,31 @@
 
                     <div class="max-w-4xl mx-auto space-y-8 text-lg text-gray-600">
                         <p>
-                            The <strong>Northern Reform Organization</strong> traces its ideological roots to the early
-                            20th-century nationalist movements that sought to challenge hegemony and advocate for
-                            self-determination. In 1908, a leadership alliance was formed to protect the welfare of
-                            residents against inequitable taxation—a principle we uphold today.
+                            Credit for the establishment of <strong>Northern Reform Organization (NRO)</strong> is
+                            attributable to a
+                            category of concerned elders that include retired Technocrats, Captains of Industries,
+                            Businessmen as well as Enterprising Individuals.
                         </p>
                         <p>
-                            As these ideas moved northward, they were adapted by a burgeoning class of educated elites.
-                            Today, we represent the convergence of academic rigor, legal advocacy, and political
-                            transparency.
+                            The Organization was officially registered with the Corporate Affairs Commission on the 5th
+                            of December, 2019. Under the able guidance of our leadership, we have mobilized
+                            around the idea of rejuvenating the Northern Region concept.
                         </p>
                         <div class="grid md:grid-cols-2 gap-8 mt-12">
                             <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
                                 <h3 class="text-xl font-bold text-emerald-900 mb-4 flex items-center gap-2">
                                     <i data-lucide="eye" class="w-5 h-5 text-amber-500"></i> Our Vision
                                 </h3>
-                                <p class="text-base">To modernize Northern Nigeria without sacrificing its cultural and
-                                    religious identity, creating a region defined by digital literacy, legal equity, and
-                                    economic prosperity.</p>
+                                <p class="text-base">To bring about Moral Re-birth, Social Justice and Political Unity
+                                    to the Northern Region.</p>
                             </div>
                             <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
                                 <h3 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2">
                                     <i data-lucide="target" class="w-5 h-5 text-emerald-500"></i> Our Mission
                                 </h3>
-                                <p class="text-base">To integrate Northern Nigeria into the global digital and economic
-                                    landscape through educational reconstruction, socio-legal advocacy for the
-                                    vulnerable, and ethical political realignment.</p>
+                                <p class="text-base">To restore harmony, sustain peace and economic development within
+                                    the Region. We aim to enthrone a viable identity value system for the
+                                    all-round good of the Region.</p>
                             </div>
                         </div>
                     </div>
@@ -437,208 +451,113 @@
             <div class="pt-32 pb-20 bg-white">
                 <div class="container mx-auto px-6">
                     <div class="mb-12 text-center">
-                        <span class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our Strategic
-                            Pillars</span>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Comprehensive Reform
-                            Initiatives</h2>
+                        <span
+                            class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Implementation
+                            Plans</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Strategic Initiatives
+                        </h2>
                         <div
                             class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-3 gap-8">
-                        <!-- Card 1 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="book-open"
+                                <i data-lucide="shield-check"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Educational Reconstruction</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Pivoting to digital-first education
-                                and 'Education for All' (EFA). We support initiatives like the National Open University
-                                to democratize access across Kano, Borno, and Yobe.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">State Development Plans</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Spearhead the design of Development
+                                Plan, with focus on key areas, namely: Security, Education, Agriculture, Small and
+                                Medium Scale Enterprises (SMEs), Infrastructure and Commerce.</p>
                         </div>
-                        <!-- Card 2 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="scale"
+                                <i data-lucide="landmark"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Socio-Legal Advocacy</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Through partnerships with
-                                organizations like WRAPA, we advocate for the Violence Against Persons Prohibition
-                                (VAPP) Law and provide legal aid to the vulnerable.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Cooperative Financing</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Establish and register a Cooperative
+                                Financing Agency (CFA), to finance the proposed Development Plans to reposition
+                                agricultural production, commercial and industrial activities in the North.
+                            </p>
                         </div>
-                        <!-- Card 3 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="globe"
+                                <i data-lucide="tractor"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Digital Government</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Spearheading the Nigerian Government
-                                Digital Service (NGDS) to digitize top federal programs and ensure transparency in the
-                                energy and agricultural sectors.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Northern Farmers Association</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Establish a Coordinating Authority
+                                for the development of a powerful Northern Farmers Association that brings together
+                                different associations like RIFAN, Wheat producers, Potato farmers and others.</p>
                         </div>
-                        <!-- Card 4 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="building-2"
+                                <i data-lucide="zap"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Institutional Integrity</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Promoting the 'R-E-C-I-T-E' core
-                                values in public institutions like the Debt Management Office to ensure prudent fiscal
-                                management.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Power & Infrastructure</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Encourage the establishment of
+                                Public and Independent Power Plants in the North to drive sustainable industrial growth
+                                and infrastructure development.</p>
                         </div>
-                        <!-- Card 5 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="lightbulb"
+                                <i data-lucide="recycle"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Energy Reform</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Advocating for the liberalization of
-                                power generation to fuel industrialization and resolving infrastructure bottlenecks in
-                                the North.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Waste Management Industry</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Encourage the establishment of
+                                Garbage and Waste matter processing industries by each State Government to process
+                                recycled materials and produce Organic Fertilizer and Bio-gas.</p>
                         </div>
-                        <!-- Card 6 -->
                         <div
-                            class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group h-full flex flex-col">
+                            class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group h-full flex flex-col">
                             <div
                                 class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
-                                <i data-lucide="users"
+                                <i data-lucide="radio"
                                     class="w-7 h-7 text-emerald-700 group-hover:text-white transition-colors duration-300"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Political Realignment</h3>
-                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Supporting the devolution of power
-                                to federating states to bring governance closer to the people and restore ethical
-                                leadership.</p>
-                            <a href="#"
-                                class="inline-flex items-center text-emerald-700 font-semibold group-hover:text-amber-600 transition-colors">
-                                Learn more <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                            </a>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Strategic Communication</h3>
+                            <p class="text-gray-600 mb-6 flex-grow leading-relaxed">Develop galvanizing Television and
+                                Radio programs that would be self-financing to redirect, refocus, reinforce and empower
+                                the people.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== PROJECTS PAGE ==================== -->
-        <section id="projects" class="page-section">
-            <div class="py-20 bg-emerald-50 pt-32">
+        <!-- ==================== CHAPTERS PAGE ==================== -->
+        <section id="chapters" class="page-section">
+            <div class="bg-gray-50 pt-32 pb-20">
                 <div class="container mx-auto px-6">
                     <div class="mb-12 text-center">
-                        <span
-                            class="text-amber-600 font-bold tracking-wider uppercase text-sm mb-2 block">Interventions</span>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Impact in Action</h2>
+                        <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our
+                            Network</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">State & Zonal
+                            Coordinators</h2>
                         <div
                             class="h-1.5 w-24 bg-gradient-to-r from-emerald-600 to-amber-400 rounded-full mt-4 mx-auto">
                         </div>
+                        <p class="mt-6 text-gray-600 max-w-2xl mx-auto">
+                            The Northern Reform Organization operates through a robust grassroots network across the 19
+                            Northern states and the FCT.
+                        </p>
                     </div>
-
-                    <div class="space-y-12">
-                        <!-- Project 1 -->
-                        <div
-                            class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 grid md:grid-cols-12">
-                            <div class="md:col-span-5 bg-gray-200 min-h-[300px] relative">
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center text-gray-500 bg-emerald-100">
-                                    <span class="bg-white/50 px-4 py-2 rounded-lg">[Image: Classroom in Jigawa]</span>
-                                </div>
-                            </div>
-                            <div class="md:col-span-7 p-10 flex flex-col justify-center">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span
-                                        class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold uppercase">Education</span>
-                                    <span class="text-gray-400 text-sm">2011 - Present</span>
-                                </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-4">The Education Ledger Project (ELP)
-                                </h3>
-                                <p class="text-gray-600 mb-6">
-                                    A data-driven initiative to determine the precise cost of bringing children into
-                                    schools in states like Kano, Jigawa, and Sokoto. Moving beyond rhetoric to address
-                                    systemic barriers to literacy through fiscal planning.
-                                </p>
-                                <div class="flex gap-6 border-t border-gray-100 pt-6">
-                                    <div>
-                                        <span class="block text-2xl font-bold text-emerald-700">9</span>
-                                        <span class="text-sm text-gray-500">States Targeted</span>
-                                    </div>
-                                    <div>
-                                        <span class="block text-2xl font-bold text-emerald-700">100%</span>
-                                        <span class="text-sm text-gray-500">Data Transparency</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project 2 -->
-                        <div
-                            class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 grid md:grid-cols-12">
-                            <div class="md:col-span-7 p-10 flex flex-col justify-center order-2 md:order-1">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span
-                                        class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase">Human
-                                        Rights</span>
-                                    <span class="text-gray-400 text-sm">Ongoing</span>
-                                </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-4">Legal Access & VAPP Implementation
-                                </h3>
-                                <p class="text-gray-600 mb-6">
-                                    Bridging the gap between formal legal protections and lived reality. We mobilize
-                                    focal persons in grassroots areas to provide counseling and legal defense for women,
-                                    enforcing the VAPP Law in culturally conservative regions.
-                                </p>
-                                <div class="flex gap-6 border-t border-gray-100 pt-6">
-                                    <div>
-                                        <span class="block text-2xl font-bold text-emerald-700">10k+</span>
-                                        <span class="text-sm text-gray-500">Beneficiaries</span>
-                                    </div>
-                                    <div>
-                                        <span class="block text-2xl font-bold text-emerald-700">36</span>
-                                        <span class="text-sm text-gray-500">States Active</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="md:col-span-5 bg-gray-200 min-h-[300px] relative order-1 md:order-2">
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center text-gray-500 bg-amber-50">
-                                    <span class="bg-white/50 px-4 py-2 rounded-lg">[Image: Legal Advocacy
-                                        Workshop]</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="chapters-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     </div>
                 </div>
             </div>
@@ -646,62 +565,62 @@
 
         <!-- ==================== MEMBERSHIP PAGE ==================== -->
         <section id="membership" class="page-section">
-            <div class="bg-emerald-900 text-white relative overflow-hidden pt-32 pb-20">
+            <div class="bg-emerald-900 text-white relative overflow-hidden pt-24 md:pt-32 pb-16 md:pb-20">
                 <div
-                    class="absolute top-0 right-0 w-1/2 h-full bg-emerald-800 transform -skew-x-12 translate-x-20 opacity-50">
+                    class="absolute top-0 right-0 w-full md:w-1/2 h-full bg-emerald-800 transform md:-skew-x-12 md:translate-x-20 opacity-30 md:opacity-50 pointer-events-none">
                 </div>
-                <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl">
-                    <h2 class="text-4xl font-bold mb-6">Join the Alliance for a New Nigeria</h2>
-                    <p class="text-emerald-100 text-lg mb-10">
-                        Become part of a network of professionals, academics, and advocates dedicated to restoring the
-                        "glory path" through ethical reformation and civic engagement.
+                <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center max-w-3xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6">Join the Alliance for a New Nigeria</h2>
+                    <p class="text-emerald-100 text-base md:text-lg mb-8 md:mb-10 px-2">
+                        Become part of a network dedicated to a virile political culture and ensuring that peace and
+                        stability are established and sustained within the Northern zone.
                     </p>
-
-                    <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
-                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
-                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
-                            <h4 class="font-bold mb-2">Access Research</h4>
-                            <p class="text-sm text-emerald-200">Exclusive access to education sector analysis reports.
-                            </p>
+                    <div class="grid sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12 text-left">
+                        <div class="bg-white/10 backdrop-blur-sm p-5 md:p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-2 md:mb-3"></i>
+                            <h4 class="font-bold mb-1 md:mb-2 text-sm md:text-base">Political Culture</h4>
+                            <p class="text-xs md:text-sm text-emerald-200">Develop a distinct, winning political culture
+                                with a high moral compass.</p>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
-                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
-                            <h4 class="font-bold mb-2">Network</h4>
-                            <p class="text-sm text-emerald-200">Connect with reformist leaders and traditional rulers.
-                            </p>
+                        <div class="bg-white/10 backdrop-blur-sm p-5 md:p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-2 md:mb-3"></i>
+                            <h4 class="font-bold mb-1 md:mb-2 text-sm md:text-base">Sustain Peace</h4>
+                            <p class="text-xs md:text-sm text-emerald-200">Create an enabling environment for harmonious
+                                co-existence.</p>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
-                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-3"></i>
-                            <h4 class="font-bold mb-2">Impact</h4>
-                            <p class="text-sm text-emerald-200">Directly support our legal aid and literacy projects.
-                            </p>
+                        <div class="bg-white/10 backdrop-blur-sm p-5 md:p-6 rounded-xl border border-white/10">
+                            <i data-lucide="check-circle" class="text-amber-400 w-6 h-6 mb-2 md:mb-3"></i>
+                            <h4 class="font-bold mb-1 md:mb-2 text-sm md:text-base">Self-Reliance</h4>
+                            <p class="text-xs md:text-sm text-emerald-200">Direct our communities on self-reliance,
+                                civic duties and development.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container mx-auto px-6 py-12">
-                <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold text-center mb-6">Register Interest</h3>
+            <div class="container mx-auto px-4 sm:px-6 py-10 md:py-16 bg-gray-50">
+                <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-100">
+                    <h3 class="text-xl md:text-2xl font-bold text-center mb-6">Register Interest</h3>
                     <form class="space-y-4"
                         onsubmit="event.preventDefault(); alert('Application submitted successfully!');">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="First Name"
-                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" placeholder="Last Name"
-                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <!-- Updated Form Grid for Responsiveness -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" placeholder="First Name" required
+                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
+                            <input type="text" placeholder="Last Name" required
+                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
                         </div>
-                        <input type="email" placeholder="Email Address"
-                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <select
-                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-500">
-                            <option>Select Membership Type</option>
-                            <option>Student / Youth</option>
-                            <option>Professional</option>
-                            <option>Corporate Partner</option>
+                        <input type="email" placeholder="Email Address" required
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
+                        <select required
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600 transition-shadow appearance-none">
+                            <option value="">Select Membership Type</option>
+                            <option value="student">Student / Youth</option>
+                            <option value="professional">Professional</option>
+                            <option value="corporate">Corporate Partner</option>
                         </select>
                         <button type="submit"
-                            class="w-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg px-6 py-3 rounded-full font-medium transition-all duration-300">
+                            class="w-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-md hover:shadow-lg px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 mt-2">
                             Submit Application
                         </button>
                     </form>
@@ -713,7 +632,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300 pt-20 pb-10">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center gap-2 mb-6">
                         <div
@@ -722,39 +641,18 @@
                         <span class="text-white font-bold text-lg">NRO</span>
                     </div>
                     <p class="text-sm leading-relaxed mb-6">
-                        Advancing socio-political evolution in Northern Nigeria through education, justice, and ethical
-                        governance.
+                        DESIDERATA TO CHANGE WITH HOPE AND OPTIMISM
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#"
-                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
-                                data-lucide="twitter" class="w-4 h-4"></i></a>
-                        <a href="#"
-                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
-                                data-lucide="facebook" class="w-4 h-4"></i></a>
-                        <a href="#"
-                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 transition-colors"><i
-                                data-lucide="linkedin" class="w-4 h-4"></i></a>
-                    </div>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-bold mb-6">Initiatives</h4>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-emerald-400">Education for All</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Legal Aid Clinic</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Digital Government Service</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Debt Management Integrity</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold mb-6">Resources</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-emerald-400">NRO Annual Reports</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Reform Manifesto</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Events Calendar</a></li>
-                        <li><a href="#" class="hover:text-emerald-400">Blog & Updates</a></li>
+                        <li><a href="#" onclick="navigateTo('about')" class="hover:text-emerald-400">About Us</a></li>
+                        <li><a href="#" onclick="navigateTo('programs')" class="hover:text-emerald-400">Our
+                                Interventions</a></li>
+                        <li><a href="#" onclick="navigateTo('leadership')" class="hover:text-emerald-400">Board of
+                                Trustees</a></li>
                     </ul>
                 </div>
 
@@ -763,15 +661,18 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-3">
                             <i data-lucide="map-pin" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
-                            <span>No. 45 Administrative Way,<br />Kano, Nigeria</span>
+                            <span>No. 11, Zaria Road,<br />Kano, Nigeria</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="mail" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
-                            <span>secretariat@nro-ng.org</span>
+                            <a href="mailto:northernreformorganisation@gmail.com"
+                                class="hover:text-emerald-400 transition-colors">
+                                Email us directly
+                            </a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="phone" class="text-emerald-600 w-5 h-5 flex-shrink-0"></i>
-                            <span>+234 800 REFORM NG</span>
+                            <span>+234 803 787 3699, <br> +234 803 302 8967, <br> +234 802 834 9053</span>
                         </li>
                     </ul>
                 </div>
@@ -780,11 +681,6 @@
             <div
                 class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
                 <p>&copy; 2026 Northern Reform Organization. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Terms of Service</a>
-                    <a href="#" class="hover:text-white">Cookie Settings</a>
-                </div>
             </div>
         </div>
     </footer>
@@ -797,124 +693,94 @@
         // --- Leadership Data Population ---
         const boardMembers = [
             {
-                name: "Sir Ahmadu Bello",
-                title: "Sardauna of Sokoto / Premier of Northern Nigeria",
-                bio: "Sir Ahmadu Bello (1910–1966) was a Nigerian statesman and the Sardauna of Sokoto. He served as Premier of Northern Nigeria from 1954 to 1966 and co-founded the Northern People's Congress (NPC). Bello championed education, regional development, and modernization while preserving Islamic traditions. He was assassinated during the 1966 military coup, becoming a symbol of Northern political leadership."
+                name: "Alhaji Gidado Mukhtar",
+                title: "Chairman of the Northern Reform Organization",
+                image: "img/Alhaji Gidado Mukhtar.jpeg",
+                bio: "Alhaji Gidado Mukhtar is the current Chairman of the Northern Reform Organization. Born on  2nd May, 1948 in Kano Gidado Mukhtar is a retired Public Servant. He had his primary education in Wudil and Birnin Kudu between 1955 to 1962. He attended Government College Keffi, Nassarawa State and 1972 earned a second class upper  division degree  in Business administration from Ahmadu Bello University Zaria in 1972. In 1976 bagged a  Postgraduate Diploma in Development Administration from the same university . He attended a Special Directors Programme, Ashridge UK, Birmingham University, United Kingdom in 1993 Alhaji Gidado Mukhtar started his public service career as Divisional Officer and Justice of the Peace, Kazaure Division from 1972-1974.He became a Director at the National Universities Commission, London Office between 1979-1983. He returned to the services of Kano State Government and rose to the rank of Permanent Secretary serving in various ministries including Cabinet Office,  Special Services Directorate, Office of the Deputy Governor, Civil Service commission and  Economic Planning Division. He became Executive Director Services at African Petroleum Plc. from 1991-2000. He was also Director General Kano Peace and Development Initiative (KAPEDI) from 2009-2011 and served as Senior Special Advisor on Environment to the Governor of  Kano State from  2011-2015 He has also served as  Member of various Boards in public and private institutions such as Kano State Urban Development Board, Northern Nigerian Development Company (NNDC), Kaduna, Federation of Co-Operatives Societies, Kano Textile Printers Limited, Kano Investment Company, Manufactures Association of Nigeria. Kano State branch and Tropical Commercial Bank. He is a member of many association and councils and has served on many committees. Alhaji Gidado Mukhtar has attended many seminars, workshops, conferences within outside Nigeria and presented papers and discussed diverse issues of policy interest on many fora. Married with children, his hobbies include Reading, Book Collection, Drawing, Discussion and Playing Badminton."
             },
             {
-                name: "Alhaji Abubakar Tafawa Balewa",
-                title: "Prime Minister of Nigeria",
-                bio: "Alhaji Abubakar Tafawa Balewa (1912–1966) was Nigeria’s first and only Prime Minister. A key figure in independence negotiations, he emphasized national unity while advocating for Northern interests. Balewa was known for his diplomatic and moderate leadership. He was assassinated in the 1966 coup alongside Ahmadu Bello."
+                name: "Alhaji Abdulraham Umar",
+                title: "Deputy Chairman of the Northern Reform Organization",
+                image: "img/Alhaji Abdulraham Umar.jpeg",
+                bio: "Alhaji Abdulraham Umar is the current Deputy Chairman of the Northern Reform Organization. He is a Nigerian banker, public servant, and writer from Kano State, Nigeria. Born on April 19, 1948, in Farm Centre, Kano, he received his early education in Kano and later attended the Technical Institute, Kaduna (now Kaduna Polytechnic). After graduating as the best student, he received a Northern Nigerian government scholarship to study in the United Kingdom, where he attended Minster College, Newcastle and later Newcastle Polytechnic, earning a Higher National Diploma (HND) becoming the first indigene of Kano State to obtain a HND.He returned to Nigeria in 1970 and began his career as a Cooperative Officer with the Kano State Government. While in service, he furthered his education at the Harvard Kennedy School, where he obtained a Master’s degree in Public Administration. In 1981, Umar joined the banking sector, working with Afribank Nigeria Plc (formerly the International Bank for West Africa). Over the years he served in several key roles, including Branch Manager, Area Manager, Regional Manager, Assistant Chief Inspector, and later Executive Director from 1996 to 2002, when he retired. After retirement, he briefly served as an Executive Director at Spring Bank Plc and also ventured into agriculture through Jogana Fisheries Limited. He remains active in retirement through writing, agriculture, and family life, with a large extended family of 46 children, grandchildren, and relatives."
             },
             {
-                name: "Alhaji Aminu Kano",
-                title: "Political Leader / Reformer",
-                bio: "Alhaji Aminu Kano (1920–1983) founded the Northern Elements Progressive Union (NEPU) and was a radical populist politician. He championed the rights of the talakawa (common people), promoted education reform, and advocated for social justice and socialist principles in Northern Nigeria. His leadership challenged entrenched feudal political structures."
+                name: "Alhaji Yusuf Abdallah Usman",
+                title: "Secretary General of the Northern Reform Organization",
+                image: "img/Alhaji Yusuf Abdallah Usman.jpeg",
+                bio: "Alhaji Yusuf Abdallah Usman is the current Secretary General of the Northern Reform Organization. Yusuf Abdallah Usman was born on 24th June 1961. He attended Shahuci and Batta Primary Schools, Kano, Rumfa College Kano, Ahmadu Bello University Zaria, Bayero University Kano, Nigeria Institute of Journalism, Lagos, Institute of Archeology and Museum Studies Jos . He was a pioneer participant of Policy and Strategy Program of the National Institute for Policy and Strategic Studies, Jos. Mr Usman was the Director General and Chief Executive of the National Commission for Museums and Monuments from 2009 to 2017 after serving variously as Director and Curator of many museums across  the country, during which period he oversaw the conservation of the 8000 year old Dufuna Canoe in Damaturu, the second  oldest dugout boat in the world. He was Nigeria's representative on  the UNESCO World Heritage Committee from 2006 to 2010. Author of many  papers on History, Art, Museology and Museography  Mr Usman, a trained journalist  was at various times, reporter, State Editor, Features Editor and Member of the Editorial Board of The Triumph newspapers. He is married and has children. He is currently the Director General of the National Research and Innovation Council (NRIC) and Chairman of the National Research and Innovation Office (NRIO)."
             },
             {
-                name: "Shehu Shagari",
-                title: "President of Nigeria",
-                bio: "Shehu Shagari (1925–2018) was Nigeria’s first Executive President, serving from 1979 to 1983 during the Second Republic. His administration focused on agricultural development, education, and national integration. Shagari was overthrown in the 1983 military coup but is remembered for promoting civilian governance and democratic ideals in Northern Nigeria."
+                name: "Alhaji Musa Magami  OON",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Musa Magami OON is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Yakubu Gowon",
-                title: "Head of State",
-                bio: "General Yakubu Gowon (born 1934) was Nigeria’s Head of State from 1966 to 1975. He led the country during the Civil War (1967–1970) and promoted the principle of 'No victor, no vanquished' to ensure reconciliation. Gowon focused on infrastructure development, national unity, and post-war reconstruction."
+                name: "Alhaji Ado Muhammad",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Ado Muhammad is a highly accomplished entrepreneur with vast experience in business, industry, Alh. Ado had a rich career in the banking sector. He was at various times the branch manager of Barclays Bank now Union Bank , in Kontagora, Mulunfashi and Kaduna. He also headed of Kano branch of the bank. Alhaji Ado Muhammad was the Vice Chairman of Nigerian Chamber of Commerce, Mines, Agriculture  and industry and the  Chairman of the Kano branch of the organization. He is currently the Executive Director of FILIPS, the owners of Freedom Radio which he chairs."
             },
             {
-                name: "Murtala Mohammed",
-                title: "Military Head of State",
-                bio: "General Murtala Mohammed (1938–1976) served as Nigeria’s Military Head of State from 1975 until his assassination in 1976. He was known for bold anti-corruption reforms, bureaucratic restructuring, and decentralization. His brief tenure left a lasting impact on governance efficiency and public sector accountability."
+                name: "Alhaji Maimako Oumar-Shittien",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Maimako Oumar-Shittien is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Muhammadu Buhari",
-                title: "Military Head of State / President",
-                bio: "General Muhammadu Buhari (born 1942) ruled as Military Head of State from 1983 to 1985 and later as elected President from 2015 to 2023. He is known for his strict discipline, anti-corruption campaigns, and efforts to strengthen security. Buhari has been a central figure in Northern Nigerian politics for decades."
+                name: "Alhaji  Mas'ud Elelu fnim, fcsn",
+                title: "Member",
+                image: "",
+                bio: "Alhaji  Mas'ud Elelu fnim, fcsn is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Ibrahim Babangida",
-                title: "Military President",
-                bio: "General Ibrahim Babangida (born 1941) was Nigeria’s Military President from 1985 to 1993. He introduced the Structural Adjustment Program (SAP), attempted political liberalization, and controversially annulled the 1993 presidential election, shaping Nigeria’s political trajectory in the late 20th century."
+                name: "Mr James Magit",
+                title: "Member",
+                image: "img/Mr James Magit.jpeg",
+                bio: "Mr James Magit is a prominent figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Sani Abacha",
-                title: "Military Head of State",
-                bio: "General Sani Abacha (1943–1998) was Nigeria’s Military Head of State from 1993 until his death in 1998. His regime was marked by authoritarian rule, political repression, and significant corruption, but also by economic stabilization initiatives. Abacha remains a controversial figure in Nigerian history."
+                name: "Engineer Muhammad Sani Alhassan",
+                title: "Member",
+                image: "",
+                bio: "He was born in Suleja, Niger State in 1955. He earned a Bachelor of Engineering from Ahmadu Bello University Zaria in 1978 and was a participant Advanced Management Program Course 169 of Harvard Business School Boston  USA. After his Youth Service year at Ibadan he joined the service of Niger State Government as Executive Civil Engineer ll where he served as member of the Niger State Government Task Force on Resettlement Scheme as well the Road Supervision Team of Kata'eregi Road Project. In 1980 he joined the services of Federal Capital Teritory Administration as Executive Civil Engineer l and rose through the rank. He served  Executive Secretary of the Federal Capital Development Authority from 2004 to 2011. After retirement he was appointed Special Adviser on Infrastructure and Economic Projects to Niger State Governor from 2012 to 2015. Currently he has been the Alternate Chairman Suleja Smart City Project since ,2016. Engineer Muhammad Sani Alhassan is a Fellow, Member or Chairman of several organizations including Coucil of Registered Engineers, Nigerian Society of Engineers and Institute of Corporate Administration."
             },
             {
-                name: "Usman dan Fodio",
-                title: "Religious & Traditional Leader",
-                bio: "Usman dan Fodio (1754–1817) was an Islamic scholar, reformer, and founder of the Sokoto Caliphate. He led the Fulani Jihad in 1804, establishing one of West Africa’s largest pre-colonial states. His religious and political legacy shaped Northern Nigeria’s governance and Islamic scholarship for generations."
+                name: "Professor Murtala Abubakar Gada",
+                title: "Member",
+                image: "",
+                bio: "Professor Murtala Abubakar Gada is a prominent figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Muhammadu Sanusi I",
-                title: "Sultan of Sokoto",
-                bio: "Muhammadu Sanusi I (1881–1959) served as Sultan of Sokoto from 1957 to 1988. As a traditional and religious leader, he was influential in promoting Islamic education, jurisprudence, and socio-political guidance in Northern Nigeria. He was also the grandfather of Sanusi Lamido Sanusi."
+                name: "Alhaji Mujtaba Isa Gusau mni",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Mujtaba Isa Gusau mni is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Ado Bayero",
-                title: "Emir of Kano",
-                bio: "Ado Bayero (1930–2014) was the Emir of Kano from 1963 to 2014. He was one of Nigeria’s longest-serving traditional rulers, promoting interfaith harmony, civic development, and cultural preservation. Bayero played a unifying role in Kano State and Northern Nigeria at large."
+                name: "Alhaji Adamu Aliyu Kiyawa",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Adamu Aliyu Kiyawa, Danmasanin Dutse is a Educator, veteran journalist, administrator and businessman. A registered professional teacher. He taught at College of Preliminary Studies, Yola Adamawa State and Usman Danfodio University Sokoto. He started his journalistic career with NTA Yola. He was the Editor of Albishir, a Hausa weekly newspaper of Triumph Publishing Company, Kano and worked with the BBC in London for several years before serving as at various times as  Commissioner a for Information, Youth, Sports and Culture; Education; Land, Survey and Physical Planning in Jigawa State. Alhaji Adamu Aliyu Kiyawa was the initiator and founding Chairman of Dutse Capital (now Dutse International Model) School and is now the Proprietor of Gateway International Schools in Kano and Dutse. Currently the District Head of Kiyawa holder of the Title of DanMasanin Dutse, he has served as Member or  Chairman of several committees, associations, boards at both State and National levels including banks and financial institutions."
             },
             {
-                name: "Abubakar Gumi",
-                title: "Islamic Scholar / Cleric",
-                bio: "Sheikh Abubakar Gumi (1924–1992) was a prominent Islamic cleric and reformist in Northern Nigeria. He advocated Sunni orthodoxy, opposed certain Sufi practices, and influenced modern Islamic education and jurisprudence in the region. Gumi’s teachings shaped religious thought and activism."
+                name: "Alhaji Lamis Shehu Dikko",
+                title: "Member",
+                image: "img/Alhaji Lamis Shehu Dikko.jpeg",
+                bio: "Presently Chairman of NNDC Ltd (owned by the 19 Northern States) Also the Second Vice President of the Chartered Institute of Directors. He is  a Non-Executive Director at Mutual Benefits Assurance Plc and has also served on the Board of Enterprise Bank Limited. He was Executive Director, Commercial Banking at Unity Bank Plc and later Chairman of the Board. He is the Chairman of the Infrastructure Bank Plc. Born in 1957 at Batagarawa Katsina State. Mr. Dikko obtained a B.Sc. in Economics from Ahmadu Bello University, Zaria. He is also a graduate of the Harvard Business School Leadership Programme and Queen Mary College, University of London. Mr Dikko started his career at the Kaduna State Radio as Producer of News and Current Affairs, from where he moved to the Nigerian Standard Newspaper as Sub-Editor. He lectured briefly at College of Advanced Studies, Zaria before joining Habib Nigeria Bank. He joined Intercity Bank PLC in 1998 as General Manager and served as its Managing Director/Chief Executive Officer from 2001 to 2005. He is a Non-Executive Director at Mutual Benefits Assurance Plc and has also served on the Board of Enterprise Bank Limited. He was Executive Director, Commercial Banking at Unity Bank Plc and later Chairman of the Board. He is the Chairman of the Infrastructure Bank Plc."
             },
             {
-                name: "Sir Kashim Ibrahim",
-                title: "Governor of Northern Nigeria",
-                bio: "Sir Kashim Ibrahim (1910–1990) was Governor of Northern Nigeria from 1962 to 1966. A close ally of Ahmadu Bello, he focused on administrative reforms, education, and economic development. His tenure strengthened the political and bureaucratic structures of the Northern Region."
+                name: "Dr Zanna Hassan Boguma FCIPDM FWIP",
+                title: "Member",
+                image: "",
+                bio: "Dr Zanna Hassan Boguma FCIPDM FWIP Zanna Boguma of Borno is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             },
             {
-                name: "Alhaji Ismaila Isa Funtua",
-                title: "Media & Political Strategist",
-                bio: "Alhaji Ismaila Isa Funtua (1942–2010) was a Northern Nigerian media mogul and influential political strategist. He advised multiple Nigerian leaders, helped shape Northern political policies, and was known for philanthropy and mentorship in civil society."
-            },
-            {
-                name: "Alhaji Bashir Dalhatu",
-                title: "Politician & Business Leader",
-                bio: "Alhaji Bashir Dalhatu (born 1949) is a Northern Nigerian lawyer, politician, and businessman. He has held key positions in governance and finance, contributing to policy-making and private sector development. Dalhatu is also known for advocacy on Northern socio-economic issues."
-            },
-            {
-                name: "Hajiya Aisha I. Dankani",
-                title: "Legal Practitioner / Administrator",
-                bio: "Barrister Aisha I. Dankani is an accomplished lawyer and public administrator with decades of service in Nigeria’s judiciary and federal civil service. She held Director-level positions in multiple ministries, contributed to legal reforms including the Child Rights Decree, and served on national boards such as the Bank of Industry and Nigeria Customs."
-            },
-            {
-                name: "Alhaji Abubakar Sadiq Umar",
-                title: "Secretary General",
-                bio: "Alhaji Abubakar Sadiq Umar is a Northern Nigerian public servant and administrator who has held leadership roles in policy coordination and governance. He has contributed to institutional reforms and regional development initiatives."
-            },
-            {
-                name: "Sen. Usman Umar Kibiya",
-                title: "Politician / BOT Member",
-                bio: "Senator Usman Umar Kibiya is a Northern Nigerian politician and board member in multiple institutions. He has played active roles in legislative processes and community development programs."
-            },
-            {
-                name: "Alhaji Ahmadu Gemade",
-                title: "Minister / Politician",
-                bio: "Alhaji Ahmadu Gemade is a Northern Nigerian politician and former minister. He contributed to national policy-making and governance, with focus on economic development and agricultural reforms."
-            },
-            {
-                name: "Alhaji Abubakar Rimi",
-                title: "Governor of Kano State",
-                bio: "Alhaji Abubakar Rimi (1940–2010) was a Northern Nigerian politician and reformist governor of Kano State (1979–1983). He promoted modernization, education, and transparency, leaving a legacy of progressive governance."
-            },
-            {
-                name: "Alhaji Bala Mohammed",
-                title: "Politician / Minister",
-                bio: "Alhaji Bala Mohammed is a Northern Nigerian politician who has served as a federal minister and contributed to governance and socio-economic policies in the region."
-            },
-            {
-                name: "Sir Muhammadu Ribadu",
-                title: "First Minister of Defence",
-                bio: "Sir Muhammadu Ribadu (1909–1965) was the first Nigerian Minister of Defence. He played a crucial role in shaping Nigeria’s early military and security policies, strengthening the federal structure, and promoting Northern political interests."
-            },
-            {
-                name: "Mallam Aminu Isa",
-                title: "Traditional Leader / Administrator",
-                bio: "Mallam Aminu Isa was a Northern Nigerian traditional leader and administrator. He contributed to local governance, community development, and preservation of cultural heritage in Northern Nigeria."
+                name: "Alhaji Umar Abdulwahab",
+                title: "Member",
+                image: "",
+                bio: "Alhaji Umar Abdulwahab is a respected figure in the Northern region, known for his contributions to public service and community development. He has been recognized for his efforts in promoting social welfare and economic growth."
             }
         ];
 
@@ -943,12 +809,19 @@
         if (leadershipGrid) {
             boardMembers.forEach((member, index) => {
                 const card = document.createElement('div');
+                const avatar = member.image
+                    ? `<img src="${member.image}" alt="${member.name}" class="w-24 h-24 rounded-full object-cover border-2 border-emerald-100 group-hover:border-emerald-500 transition-colors">`
+                    : `<div class="w-24 h-24 rounded-full bg-emerald-50 flex items-center justify-center border-2 border-emerald-100 group-hover:border-emerald-500 transition-colors">
+     <span class="text-xl font-bold text-emerald-700 tracking-widest">${getInitials(member.name)}</span>
+   </div>`;
+
+
                 card.className = "bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center group";
 
-                card.innerHTML = `
-                    <div class="w-24 h-24 rounded-full bg-emerald-50 mb-4 flex items-center justify-center border-2 border-emerald-100 group-hover:border-emerald-500 transition-colors">
-                        <span class="text-xl font-bold text-emerald-700 tracking-widest">${getInitials(member.name)}</span>
-                    </div>
+                card.innerHTML = `<div class="mb-4">
+        ${avatar}
+    </div>
+
                     <h3 class="text-lg font-bold text-gray-900 mb-1 leading-tight">${member.name}</h3>
                     <p class="text-sm text-emerald-600 font-medium mb-4">${member.title}</p>
                     <button onclick="openModal(${index})" class="mt-auto text-xs font-bold text-gray-400 hover:text-amber-500 flex items-center gap-1 transition-colors uppercase tracking-wider">
@@ -957,7 +830,44 @@
                 `;
                 leadershipGrid.appendChild(card);
             });
-            // Re-init icons for new elements
+        }
+        // --- Regional Chapters Data Population ---
+        const stateChapters = [
+            { state: "Kano State", coordinator: "Nasiru Na Ammani Gwarzo", phone: "07063466343", zones: [{ name: "Kano Central", contact: "Garzali Ungogo (0803 722 5825)" }, { name: "Kano North", contact: "Sagir M Imam D/Tofa (0803 474 7581)" }, { name: "Kano South", contact: "Sani Shuaibu Rogo" }] },
+            { state: "Jigawa State", coordinator: "Musa Mohammed Hadejia", phone: "0803 627 0116", zones: [{ name: "North West", contact: "Ibrahim Yunusa Kazaure (08034848483)" }, { name: "North East", contact: "Garba Muhammad Umar (08067233452)" }, { name: "North Central", contact: "Umar Faruk Wada (08039101526)" }] },
+            { state: "Sokoto State", coordinator: "Alhaji Abubakar Alkanmu", phone: "08062988357", zones: [{ name: "Sokoto West", contact: "Abubakar Sajo (08065631208)" }, { name: "Sokoto East", contact: "Aliyu Umar Gatawa (08020306384)" }, { name: "Sokoto Central", contact: "Hon. Mu'azu Mohammad (08030537034)" }] },
+            { state: "Katsina State", coordinator: "Aliyu Salisu Idris", phone: "09033127046", zones: [{ name: "Zone 1", contact: "Abubakar Abubakar Funtuwa (08064988645)" }, { name: "Zone 2", contact: "Danjuma umar katsina (08032558474)" }, { name: "Zone 3", contact: "Rabiu Sani Daura (07039711483)" }] },
+            { state: "Kaduna State", coordinator: "Dr Hamisu Umar", phone: "08020636730", zones: [{ name: "Kaduna Central", contact: "Alh Haruna Ali Dogo (08033206797)" }, { name: "Zaria Zone", contact: "Alh Faruk Goma (07064560439)" }, { name: "Southern Zone", contact: "Prof JS Gwani (08033174789)" }] },
+            { state: "Nassarawa State", coordinator: "Muhammad Kabir Abubakar", phone: "0703 508 2775", zones: [{ name: "Zone 1", contact: "Hon Mohammed Aliyu Dogara (0806 579 1827)" }, { name: "Zone 2", contact: "Rayyanu Iliyasu Mohammed (08037879725)" }, { name: "Zone 3", contact: "Alh Iyal Aliyu Da tsoho (08035969927)" }] },
+            { state: "Plateau State", coordinator: "Hon. Maikudi Miri Friday", phone: "0803 787 2637", zones: [{ name: "Northern Zone", contact: "Barrister Nasiru Goshi (08035899017)" }, { name: "Central Zone", contact: "Mr. Dakom William Danjuma (07039111345)" }, { name: "Southern Zone", contact: "Hon. Jalmet Youmpee (08036125381)" }] },
+            { state: "Kebbi State", coordinator: "Pro. Abubakar Atiku Nuhu-Koko", phone: "07063306887", zones: [{ name: "Zone 1", contact: "Arch Ahmed Muh. Sama (08035054593)" }, { name: "Zone 2", contact: "Mr. Amos Sakaba (08065475148)" }, { name: "Zone 3", contact: "Dr. Usman Shehu Umar (08034088919)" }] },
+            { state: "Yobe State", coordinator: "Hon. Yakubu Yasidi Dokshi", phone: "08036404440", zones: [{ name: "Zone 1", contact: "Buba Maidugu (08038069436)" }, { name: "Zone 2", contact: "Adamu Maina Dadi (08038288548)" }, { name: "Zone 3", contact: "Mustapha Zannah Abba (08034273143)" }] },
+            { state: "Adamawa State", coordinator: "Alh Abduljalal Barkindo", phone: "08035950000", zones: [{ name: "Zone 1", contact: "Hon. Aji Paul Wampana (07068435523)" }, { name: "Adamawa Central", contact: "Umar Sambo Abubakar (0803 207 7944)" }] },
+            { state: "Gombe State", coordinator: "Alh Usman Kamara", phone: "08054340505", zones: [{ name: "Gombe North", contact: "Umar Chiroma Abdulsalam (08023725628)" }, { name: "Gombe Central", contact: "Prof Sani Abba Aliyu (08034515100)" }, { name: "Gombe South", contact: "Hon Simon Kamiya (08036072735)" }] },
+            { state: "Kwara State", coordinator: "Hon Kayode Abdul Issa", phone: "08034752519", zones: [{ name: "Central", contact: "Aliyu Oladimeji (07037375541)" }, { name: "North", contact: "Yahya Tijjani (08033644992)" }, { name: "South", contact: "M. O. Bashir (08038243102)" }] },
+            { state: "Borno State", coordinator: "Zannah Ibrahim Mustapha", phone: "08061692535", zones: [{ name: "Borno Central", contact: "Dr Adam Abubakar Abatcha (09039332262)" }, { name: "Southern Borno", contact: "Dr Yohana Ayuba JP (07033013321)" }, { name: "Northern Borno", contact: "Alhaji Baba Kura Goni Tijani (08036155542)" }] },
+            { state: "Niger State", coordinator: "Alh Hassan Abdullahi Zungeru", phone: "08035075894", zones: [{ name: "Zone A", contact: "Alhaji Ibrahim Musa Agaie (08033663695)" }, { name: "Zone B", contact: "Mal Nasiru Albani (08061247353)" }, { name: "Zone C", contact: "Alhaji Isah Mamman Kwanene (08064142823)" }] },
+            { state: "Zamfara State", coordinator: "Dr Musa Hassan Gusau", phone: "07052747041", zones: [{ name: "Zamfara Central", contact: "Musa Garba mni (08037041134)" }, { name: "Zamfara West", contact: "Prof Lawal M. Anka (0814 242 5494)" }, { name: "Zamfara East", contact: "Abubakar Samaila Kaura (0703 697 4550)" }] },
+            { state: "FCT", coordinator: "Badamasi Abubakar", phone: "0805 787 4727", zones: [{ name: "Deputy Coordinator", contact: "Alh Isiaka Nuruddeen (0806 376 0838)" }] },
+            { state: "Taraba State", coordinator: "Hajiya Hannatu Sambo", phone: "0802 823 2356", zones: [{ name: "Northern Zone", contact: "Aaron Artimas (08033934327)" }, { name: "Central Zone", contact: "Umar Julde Dakka" }, { name: "Southern Zone", contact: "Muhammad Tanko Danburam (08064745675)" }] },
+            { state: "Bauchi State", coordinator: "Muhammad Hussain Giade", phone: "0803 645 3115", zones: [{ name: "Northern Zone", contact: "Usman Shamaki Azare (0818 586 9603)" }, { name: "Southern Zone", contact: "Dr Lamir isah Lago (08033768819)" }, { name: "Central Zone", contact: "Hamza Mohammad Malami (08036135292)" }] },
+            { state: "Benue State", coordinator: "Hon Samuel Ogabidu", phone: "0703 645 2093", zones: [{ name: "Zone A", contact: "Solomon Achakpa (0703554268)" }, { name: "Zone B", contact: "Terwase Ayajov (0703559747)" }, { name: "Zone C", contact: "Comrade Ibrahim Otene (0803643830)" }] },
+            { state: "Kogi State", coordinator: "Rahmatu Ahmed", phone: "08033113448", zones: [{ name: "Kogi Central", contact: "Alh. Abdulazeez Anuhi (07011173944)" }, { name: "Kogi East", contact: "Mr. Abraham Abdullahi Aduku (08036463390)" }, { name: "Kogi West", contact: "Alh. Haruna Isah (08035935490)" }] }
+        ];
+
+        const chaptersGrid = document.getElementById('chapters-grid');
+        if (chaptersGrid) {
+            stateChapters.forEach(chapter => {
+                let zonesHTML = '';
+                if (chapter.zones && chapter.zones.length > 0) {
+                    zonesHTML = `<div class="mt-4 pt-4 border-t border-gray-100 w-full text-left"><p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Zonal Contacts</p><ul class="space-y-2">${chapter.zones.map(zone => `<li class="text-sm"><span class="font-medium text-emerald-800">${zone.name}:</span> <span class="text-gray-600 block sm:inline">${zone.contact || ''}</span></li>`).join('')}</ul></div>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-emerald-50 flex flex-col";
+                card.innerHTML = `<div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center"><i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i></div><h3 class="text-xl font-bold text-gray-900">${chapter.state}</h3></div><div class="mb-2"><p class="text-xs font-bold text-amber-500 uppercase tracking-wider mb-1">State Coordinator</p><p class="text-base font-semibold text-gray-800">${chapter.coordinator}</p><p class="text-sm text-gray-500 mt-1 flex items-center gap-2"><i data-lucide="phone" class="w-3 h-3"></i> ${chapter.phone}</p></div>${zonesHTML}`;
+                chaptersGrid.appendChild(card);
+            });
             lucide.createIcons();
         }
 
@@ -1098,6 +1008,43 @@
         window.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash.replace('#', '') || 'home';
             navigateTo(hash);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                threshold: 0.5 // Starts animation when 50% of the element is visible
+            };
+
+            const countUp = (element) => {
+                const target = +element.getAttribute('data-target'); // The final number
+                const duration = 2000; // Animation duration in milliseconds (2 seconds)
+                const increment = target / (duration / 16); // Calculate increment per frame (approx 60fps)
+
+                let current = 0;
+
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        element.innerText = Math.floor(current);
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        element.innerText = target; // Ensure it ends on the exact number
+                    }
+                };
+
+                updateCount();
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        countUp(entry.target);
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.stat-value').forEach(stat => observer.observe(stat));
         });
 
     </script>
