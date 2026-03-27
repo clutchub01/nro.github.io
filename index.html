@@ -7,9 +7,15 @@
     <title>Northern Reform Organization</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Paystack JS SDK -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts -->
+    <script src="locations.js"></script>
+    <!-- Location Data -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap"
         rel="stylesheet">
@@ -68,6 +74,77 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: #065f46;
+        }
+
+        @media print {
+
+            /* 1. Strip all filters and shadows that cause invisible text during print */
+            * {
+                filter: none !important;
+                -webkit-filter: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                text-shadow: none !important;
+                box-shadow: none !important;
+            }
+
+            body {
+                background: white;
+                margin: 0;
+                height: auto;
+                /* Allow natural height for printing */
+            }
+
+            /* 2. Hide everything but the success container */
+            body * {
+                visibility: hidden;
+            }
+
+            #success,
+            #success * {
+                visibility: visible;
+            }
+
+            /* 3. Safely position the card for paper */
+            #success {
+                position: absolute;
+                /* Absolute is much safer than fixed for print */
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0 !important;
+                padding: 2rem 0 0 0 !important;
+                /* Push it down slightly from the top edge */
+                display: flex;
+                align-items: flex-start;
+                /* Prevents vertical centering from chopping off the top */
+                justify-content: center;
+                background: white;
+            }
+
+            /* 4. Hide interactive elements */
+            .print-hide,
+            #success h2 {
+                display: none !important;
+            }
+
+            /* 5. Force exact colors so the white text shows on the dark green background */
+            #id-card {
+                width: 400px !important;
+                height: 255px !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                print-color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+                background-color: #054a33 !important;
+            }
+
+            /* Force dynamic text to stay white */
+            #card-name,
+            #card-id,
+            #card-state {
+                color: white !important;
+            }
         }
     </style>
     <script>
@@ -597,33 +674,223 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <h2 class="text-center text-2xl md:text-3xl font-bold text-gray-900 text-center mt-12 mb-4">Membership
+                    Registration
+                    Steps</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4">
+                    Follow these simple steps to register your interest in becoming an official member of the Northern
+                    Reform Organization.
+                </p>
 
-            <div class="container mx-auto px-4 sm:px-6 py-10 md:py-16 bg-gray-50">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10 px-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-100 text-center">
+                        <div
+                            class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3 font-bold border border-emerald-200">
+                            1</div>
+                        <h4 class="font-bold text-gray-800 text-sm mb-1">Personal Info</h4>
+                        <p class="text-xs text-gray-500">Name & Date of Birth</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-100 text-center">
+                        <div
+                            class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3 font-bold border border-emerald-200">
+                            2</div>
+                        <h4 class="font-bold text-gray-800 text-sm mb-1">Identity Data</h4>
+                        <p class="text-xs text-gray-500">Gender & NIN</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-100 text-center">
+                        <div
+                            class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3 font-bold border border-emerald-200">
+                            3</div>
+                        <h4 class="font-bold text-gray-800 text-sm mb-1">Contact Details</h4>
+                        <p class="text-xs text-gray-500">Phone, Email & Address</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-100 text-center">
+                        <div
+                            class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3 font-bold border border-emerald-200">
+                            4</div>
+                        <h4 class="font-bold text-gray-800 text-sm mb-1">Origin & Payment</h4>
+                        <p class="text-xs text-gray-500">State Info & ₦2000 Fee</p>
+                    </div>
+                </div>
+
+                <div class="text-center pb-12">
+                    <button
+                        onclick="document.getElementById('registration-form-section').scrollIntoView({ behavior: 'smooth' })"
+                        class="bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:-translate-y-1 flex items-center justify-center gap-2 mx-auto">
+                        <span>Start Registration</span>
+                        <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="registration-form-section"
+                class="container mx-auto px-4 sm:px-6 py-10 md:py-16 bg-gray-50 border-t border-gray-200">
                 <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-100">
                     <h3 class="text-xl md:text-2xl font-bold text-center mb-6">Register Interest</h3>
-                    <form class="space-y-4"
-                        onsubmit="event.preventDefault(); alert('Application submitted successfully!');">
-                        <!-- Updated Form Grid for Responsiveness -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <input type="text" placeholder="First Name" required
-                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
-                            <input type="text" placeholder="Last Name" required
-                                class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                        <div id="progress" class="bg-emerald-600 h-2 rounded-full" style="width:25%"></div>
+                    </div>
+                    <div id="stepIndicator" class="mb-4 text-sm text-gray-500">Step 1 of 4</div>
+                    <form id="form">
+                        <div class="step">
+                            <h2 class="text-lg font-bold text-emerald-800 mb-4 border-b border-gray-200 pb-2">Personal
+                                Information</h2>
+                            <select name="title" required class="w-full border p-2 rounded mb-3 bg-white">
+                                <option value="">Title</option>
+                                <option>Mr</option>
+                                <option>Mrs</option>
+                                <option>Miss</option>
+                                <option>Dr</option>
+                                <option>Alhaji</option>
+                                <option>Hajiya</option>
+                            </select>
+                            <input type="text" name="fullName" placeholder="Full Name" required
+                                class="w-full border p-2 rounded mb-3">
+                            <input type="date" id="dob" name="dob" required class="w-full border p-2 rounded">
                         </div>
-                        <input type="email" placeholder="Email Address" required
-                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow">
-                        <select required
-                            class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600 transition-shadow appearance-none">
-                            <option value="">Select Membership Type</option>
-                            <option value="student">Student / Youth</option>
-                            <option value="professional">Professional</option>
-                            <option value="corporate">Corporate Partner</option>
-                        </select>
-                        <button type="submit"
-                            class="w-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-md hover:shadow-lg px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 mt-2">
-                            Submit Application
-                        </button>
+                        <div class="step hidden">
+                            <h2 class="text-lg font-bold text-emerald-800 mb-4 border-b border-gray-200 pb-2">Additional
+                                Information</h2>
+                            <select name="maritalStatus" required class="w-full border p-2 rounded mb-3 bg-white">
+                                <option value="">Marital Status</option>
+                                <option>Single</option>
+                                <option>Married</option>
+                                <option>Divorced</option>
+                                <option>Widowed</option>
+                            </select>
+                            <select name="gender" required class="w-full border p-2 rounded mb-3 bg-white">
+                                <option value="">Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                            <input type="text" name="nin" placeholder="NIN (11 digits)" required
+                                class="w-full border p-2 rounded">
+                        </div>
+                        <div class="step hidden">
+                            <h2 class="text-lg font-bold text-emerald-800 mb-4 border-b border-gray-200 pb-2">Contact
+                                Information</h2>
+                            <input type="tel" name="phone" placeholder="Phone" required
+                                class="w-full border p-2 rounded mb-3">
+                            <input type="tel" name="whatsapp" placeholder="WhatsApp (optional)"
+                                class="w-full border p-2 rounded mb-3">
+                            <input type="email" name="email" placeholder="Email" required
+                                class="w-full border p-2 rounded mb-3">
+                            <textarea name="address" placeholder="Address" required
+                                class="w-full border p-2 rounded"></textarea>
+                        </div>
+                        <div class="step hidden">
+                            <h2 class="text-lg font-bold text-emerald-800 mb-4 border-b border-gray-200 pb-2">Origin
+                                Information</h2>
+                            <input list="state-list" name="state" id="state-input"
+                                placeholder="Search or select State..." required
+                                class="w-full border p-2 rounded mb-3 bg-white">
+                            <datalist id="state-list"></datalist>
+
+                            <input list="lga-list" name="lga" id="lga-input" placeholder="Search or select LGA..."
+                                required class="w-full border p-2 rounded mb-3 bg-white" disabled>
+                            <datalist id="lga-list"></datalist>
+
+                            <input type="text" name="ward" placeholder="Ward" required
+                                class="w-full border p-2 rounded mb-3">
+                            <select id="profession-select" name="profession"
+                                class="w-full border p-2 rounded mb-3 bg-white">
+                                <option value="">Professional Membership</option>
+                                <option value="Engineer">Engineer</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Lawyer">Lawyer</option>
+                                <option value="Accountant">Accountant</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <input type="text" id="other-profession-input" placeholder="Please specify your profession"
+                                class="w-full border p-2 rounded mb-3 bg-white hidden">
+                            <select name="education" required class="w-full border p-2 rounded mb-3 bg-white">
+                                <option value="">Education</option>
+                                <option>Secondary</option>
+                                <option>Diploma</option>
+                                <option>Degree</option>
+                                <option>Masters</option>
+                                <option>PhD</option>
+                            </select>
+                            <label class="flex gap-2 text-sm mt-4">
+                                <input type="checkbox" name="consent" required class="mt-1">
+                                <span>I will respect the policies of the Northern Reform Organization.</span>
+                            </label>
+                        </div>
+                        <div class="flex justify-between mt-8">
+                            <button type="button" id="prev"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-6 py-2 rounded-full transition-colors hidden">Back</button>
+                            <button type="button" id="next"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2 rounded-full transition-colors ml-auto">Next</button>
+                        </div>
                     </form>
+                </div>
+                <div id="success"
+                    class="hidden mt-6 max-w-xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow border border-gray-100 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Registration Complete!</h2>
+
+                    <div id="id-card"
+                        class="relative mx-auto bg-[#054a33] text-white rounded-xl shadow-2xl overflow-hidden text-left w-full max-w-[400px] h-[255px] border border-emerald-600/50 p-5 flex flex-col">
+
+                        <div
+                            class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 print-hide">
+                        </div>
+
+                        <div
+                            class="relative z-10 flex justify-between items-start border-b border-emerald-600/70 pb-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <img src="nro-logo.png" alt="NRO Logo"
+                                    class="w-10 h-10 rounded-full object-cover bg-white shadow-sm p-0.5">
+                                <div>
+                                    <h3
+                                        class="font-bold text-sm leading-tight uppercase tracking-wide text-amber-400 drop-shadow-sm">
+                                        Northern Reform</h3>
+                                    <p class="text-[10px] text-emerald-100 uppercase tracking-widest">Organization</p>
+                                </div>
+                            </div>
+                            <span
+                                class="text-[10px] font-bold bg-white/10 border border-white/20 px-2.5 py-1 rounded text-white uppercase tracking-wider backdrop-blur-sm">Official
+                                Member</span>
+                        </div>
+
+                        <div class="relative z-10 w-full mb-4">
+                            <p class="text-[10px] text-emerald-400 font-medium uppercase tracking-widest mb-0.5">Member
+                                Name</p>
+                            <p class="font-bold text-lg uppercase leading-tight break-words drop-shadow-sm"
+                                id="card-name"></p>
+                        </div>
+
+                        <div class="relative z-10 flex justify-between items-end w-full mt-auto">
+                            <div class="space-y-3">
+                                <div>
+                                    <p
+                                        class="text-[10px] text-emerald-400 font-medium uppercase tracking-widest mb-0.5">
+                                        Membership ID</p>
+                                    <p class="font-mono text-sm tracking-wider drop-shadow-sm font-semibold"
+                                        id="card-id"></p>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-[10px] text-emerald-400 font-medium uppercase tracking-widest mb-0.5">
+                                        State Chapter</p>
+                                    <p class="text-sm font-bold uppercase drop-shadow-sm" id="card-state"></p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-1.5 rounded-xl shadow-lg flex-shrink-0">
+                                <canvas id="qr" class="w-20 h-20"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-sm mt-8 mb-4 print-hide">Please print or save this card. The QR code
+                        contains your official verification data.</p>
+                    <button onclick="window.print()"
+                        class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-full font-medium transition-colors shadow-lg inline-flex items-center justify-center gap-2 print-hide">
+                        <i data-lucide="printer" class="w-5 h-5"></i> Print ID Card
+                    </button>
                 </div>
             </div>
         </section>
@@ -868,7 +1135,6 @@
                 card.innerHTML = `<div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center"><i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i></div><h3 class="text-xl font-bold text-gray-900">${chapter.state}</h3></div><div class="mb-2"><p class="text-xs font-bold text-amber-500 uppercase tracking-wider mb-1">State Coordinator</p><p class="text-base font-semibold text-gray-800">${chapter.coordinator}</p><p class="text-sm text-gray-500 mt-1 flex items-center gap-2"><i data-lucide="phone" class="w-3 h-3"></i> ${chapter.phone}</p></div>${zonesHTML}`;
                 chaptersGrid.appendChild(card);
             });
-            lucide.createIcons();
         }
 
 
@@ -1046,6 +1312,184 @@
 
             document.querySelectorAll('.stat-value').forEach(stat => observer.observe(stat));
         });
+
+
+        let current = 0;
+        const steps = document.querySelectorAll('.step');
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        const indicator = document.getElementById('stepIndicator');
+        const progress = document.getElementById('progress');
+
+        function validateStep() {
+            const inputs = steps[current].querySelectorAll('input, select, textarea');
+            for (let i of inputs) {
+                if (!i.checkValidity()) {
+                    i.reportValidity();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function showStep(i) {
+            steps.forEach((s, idx) => s.classList.toggle('hidden', idx !== i));
+            indicator.innerText = `Step ${i + 1} of ${steps.length}`;
+            progress.style.width = ((i + 1) / steps.length) * 100 + '%';
+            prevBtn.style.display = i === 0 ? 'none' : 'block';
+            nextBtn.innerText = i === steps.length - 1 ? 'Pay ₦2000' : 'Next';
+        }
+
+        nextBtn.onclick = () => {
+            if (!validateStep()) return;
+
+            if (current < steps.length - 1) {
+                current++;
+                showStep(current);
+            } else {
+                startPayment();
+            }
+        };
+
+        prevBtn.onclick = () => {
+            current--;
+            showStep(current);
+        };
+
+        function startPayment() {
+            const form = document.getElementById('form');
+            const data = new FormData(form);
+
+
+            if (!data.get('whatsapp')) {
+                data.set('whatsapp', data.get('phone'));
+            }
+
+            let handler = PaystackPop.setup({
+                key: 'pk_test_ce11fe2728cb76b208e539797a39658b3421642d',
+                email: data.get('email'),
+                amount: 2000 * 100,
+                currency: 'NGN',
+                callback: function (response) {
+                    completeRegistration(data, response.reference);
+                }
+            });
+            handler.openIframe();
+        }
+
+        function completeRegistration(data, ref) {
+            const memberId = 'NRO-' + Date.now();
+
+            // Hide the form, show the ID card
+            document.querySelector('.max-w-xl').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+
+            // 1. Populate the visual ID Card text
+            document.getElementById('card-name').innerText = data.get('fullName');
+            document.getElementById('card-id').innerText = memberId;
+            document.getElementById('card-state').innerText = data.get('state');
+
+            // 2. Create a detailed verification payload for the QR Code
+            const verificationDetails = `Northern Reform Organization
+-----------------------------
+Official Member Verification
+-----------------------------
+Name: ${data.get('fullName')}
+ID Number: ${memberId}
+State: ${data.get('state')}
+LGA: ${data.get('lga')}
+Phone: ${data.get('phone')}
+Profession: ${data.get('profession') || 'N/A'}
+-----------------------------
+Status: ACTIVE Member`;
+
+            // 3. Generate the QR Code with the payload and styling
+            QRCode.toCanvas(document.getElementById('qr'), verificationDetails, {
+                width: 90,       // Keep it small to fit the card layout
+                margin: 1,       // Remove excess white border
+                color: {
+                    dark: '#064e3b',  // Dark emerald color for the QR blocks
+                    light: '#ffffff'  // White background
+                }
+            });
+
+            // Refresh icons so the printer icon renders
+            lucide.createIcons();
+
+            console.log({ memberId, paymentRef: ref, data: Object.fromEntries(data) });
+        }
+
+        const dobInput = document.getElementById("dob");
+
+        const today = new Date();
+        const maxDate = new Date(
+            today.getFullYear() - 18,
+            today.getMonth(),
+            today.getDate()
+        );
+
+        // Format to YYYY-MM-DD
+        const formattedDate = maxDate.toISOString().split("T")[0];
+
+        dobInput.setAttribute("max", formattedDate);
+
+        const stateInput = document.getElementById('state-input');
+        const stateList = document.getElementById('state-list');
+        const lgaInput = document.getElementById('lga-input');
+        const lgaList = document.getElementById('lga-list');
+
+        // Populate States into the searchable list INSTANTLY
+        Object.keys(nigeriaData).sort().forEach(state => {
+            let option = document.createElement('option');
+            option.value = state;
+            stateList.appendChild(option);
+        });
+
+        // Listen for user typing or clicking a State
+        stateInput.addEventListener('input', function () {
+            // Reset LGA list and input box
+            lgaList.innerHTML = '';
+            lgaInput.value = '';
+
+            const selectedState = this.value;
+
+            // If what they typed matches a valid Nigerian state
+            if (selectedState && nigeriaData[selectedState]) {
+                // Populate the LGAs
+                nigeriaData[selectedState].sort().forEach(lga => {
+                    let option = document.createElement('option');
+                    option.value = lga;
+                    lgaList.appendChild(option);
+                });
+                lgaInput.disabled = false; // Unlock LGA input
+            } else {
+                lgaInput.disabled = true; // Lock LGA input until valid state is picked
+            }
+        });
+        const professionSelect = document.getElementById('profession-select');
+        const otherProfessionInput = document.getElementById('other-profession-input');
+
+        professionSelect.addEventListener('change', function () {
+            if (this.value === 'Other') {
+                // Show the text input and make it required
+                otherProfessionInput.classList.remove('hidden');
+                otherProfessionInput.setAttribute('required', 'true');
+
+                // Transfer the 'name' attribute so the form submits the typed text
+                otherProfessionInput.setAttribute('name', 'profession');
+                this.removeAttribute('name');
+            } else {
+                // Hide the text input, remove required, and clear it
+                otherProfessionInput.classList.add('hidden');
+                otherProfessionInput.removeAttribute('required');
+                otherProfessionInput.value = '';
+
+                // Give the 'name' attribute back to the dropdown
+                this.setAttribute('name', 'profession');
+                otherProfessionInput.removeAttribute('name');
+            }
+        });
+        showStep(current);
 
     </script>
 </body>
