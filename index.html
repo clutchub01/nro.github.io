@@ -782,17 +782,19 @@
                         <div class="step hidden">
                             <h2 class="text-lg font-bold text-emerald-800 mb-4 border-b border-gray-200 pb-2">Origin
                                 Information</h2>
-                            <input list="state-list" name="state" id="state-input"
-                                placeholder="Search or select State..." required
+                            <select name="state" id="state-input" required
                                 class="w-full border p-2 rounded mb-3 bg-white">
-                            <datalist id="state-list"></datalist>
+                                <option value="">Select State</option>
+                            </select>
 
-                            <input list="lga-list" name="lga" id="lga-input" placeholder="Search or select LGA..."
-                                required class="w-full border p-2 rounded mb-3 bg-white" disabled>
-                            <datalist id="lga-list"></datalist>
+                            <select name="lga" id="lga-input" required class="w-full border p-2 rounded mb-3 bg-white"
+                                disabled>
+                                <option value="">Select LGA</option>
+                            </select>
 
                             <input type="text" name="ward" placeholder="Ward" required
                                 class="w-full border p-2 rounded mb-3">
+
                             <select id="profession-select" name="profession"
                                 class="w-full border p-2 rounded mb-3 bg-white">
                                 <option value="">Professional Membership</option>
@@ -832,7 +834,7 @@
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Registration Complete!</h2>
 
                     <div id="id-card"
-                        class="relative mx-auto bg-[#054a33] text-white rounded-xl shadow-2xl overflow-hidden text-left w-full max-w-[400px] h-[255px] border border-emerald-600/50 p-5 flex flex-col">
+                        class="relative mx-auto bg-[#054a33] text-white rounded-xl shadow-2xl overflow-hidden text-left w-full max-w-[400px] min-h-[220px] sm:h-[255px] border border-emerald-600/50 p-5 flex flex-col">
 
                         <div
                             class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500 rounded-full mix-blend-multiply filter blur-2xl opacity-40 print-hide">
@@ -1434,57 +1436,47 @@ Status: ACTIVE Member`;
         dobInput.setAttribute("max", formattedDate);
 
         const stateInput = document.getElementById('state-input');
-        const stateList = document.getElementById('state-list');
         const lgaInput = document.getElementById('lga-input');
-        const lgaList = document.getElementById('lga-list');
 
-        // Populate States into the searchable list INSTANTLY
+        // Populate States into the select dropdown instantly
         Object.keys(nigeriaData).sort().forEach(state => {
             let option = document.createElement('option');
             option.value = state;
-            stateList.appendChild(option);
+            option.textContent = state;
+            stateInput.appendChild(option);
         });
 
-        // Listen for user typing or clicking a State
-        stateInput.addEventListener('input', function () {
-            // Reset LGA list and input box
-            lgaList.innerHTML = '';
-            lgaInput.value = '';
-
+        // Listen for mobile-friendly change event
+        stateInput.addEventListener('change', function () {
+            lgaInput.innerHTML = '<option value="">Select LGA</option>'; // Reset
             const selectedState = this.value;
 
-            // If what they typed matches a valid Nigerian state
             if (selectedState && nigeriaData[selectedState]) {
-                // Populate the LGAs
                 nigeriaData[selectedState].sort().forEach(lga => {
                     let option = document.createElement('option');
                     option.value = lga;
-                    lgaList.appendChild(option);
+                    option.textContent = lga;
+                    lgaInput.appendChild(option);
                 });
-                lgaInput.disabled = false; // Unlock LGA input
+                lgaInput.disabled = false;
             } else {
-                lgaInput.disabled = true; // Lock LGA input until valid state is picked
+                lgaInput.disabled = true;
             }
         });
+
         const professionSelect = document.getElementById('profession-select');
         const otherProfessionInput = document.getElementById('other-profession-input');
 
         professionSelect.addEventListener('change', function () {
             if (this.value === 'Other') {
-                // Show the text input and make it required
                 otherProfessionInput.classList.remove('hidden');
                 otherProfessionInput.setAttribute('required', 'true');
-
-                // Transfer the 'name' attribute so the form submits the typed text
                 otherProfessionInput.setAttribute('name', 'profession');
                 this.removeAttribute('name');
             } else {
-                // Hide the text input, remove required, and clear it
                 otherProfessionInput.classList.add('hidden');
                 otherProfessionInput.removeAttribute('required');
                 otherProfessionInput.value = '';
-
-                // Give the 'name' attribute back to the dropdown
                 this.setAttribute('name', 'profession');
                 otherProfessionInput.removeAttribute('name');
             }
