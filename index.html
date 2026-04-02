@@ -1368,7 +1368,7 @@
             }
 
             let handler = PaystackPop.setup({
-                key: 'pk_test_ce11fe2728cb76b208e539797a39658b3421642d',
+                key: 'pk_test_62a1229eeb4cea9c5a6306df3432cb30c9750ba3',
                 email: data.get('email'),
                 amount: 2000 * 100,
                 currency: 'NGN',
@@ -1380,7 +1380,12 @@
         }
 
         function completeRegistration(data, ref) {
-            const memberId = 'NRO-' + Date.now();
+            // Extract values
+            const state = data.get('state') || 'UNK';
+            const lga = data.get('lga') || 'UNK';
+
+            // Create memberId with state and LGA
+            const memberId = `NRO-${state.slice(0, 3).toUpperCase()}-${lga.slice(0, 3).toUpperCase()}-${Date.now()}`;
 
             // Hide the form, show the ID card
             document.querySelector('.max-w-xl').classList.add('hidden');
