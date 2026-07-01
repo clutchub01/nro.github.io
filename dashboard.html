@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NRO Admin Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script type="module">
+        import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc, query, orderBy, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    </script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .table-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        @media print {
+
+            /* Hide everything that isn't the card */
+            body>*:not(#print-card-container) {
+                display: none !important;
+            }
+
+            /* Reset the container for printing */
+            #print-card-container {
+                display: flex !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                background: white !important;
+            }
+
+            #print-id-card {
+                background-color: #054a33 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Hide the buttons */
+            .flex.gap-3.justify-center {
+                display: none !important;
+            }
+
+            .is-capturing {
+                display: none !important;
+            }
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getStorage, ref, deleteObject, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCcgOXXqYsT7Bw7_YFllMyHK57yEbafB0U",
+            authDomain: "nro-portal.firebaseapp.com",
+            projectId: "nro-portal",
+            storageBucket: "nro-portal.firebasestorage.app",
+            messagingSenderId: "982060711171",
+            appId: "1:982060711171:web:dca9153de882a8b1c5bd36"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // 🔐 PROTECT ROUTE
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                fetchMembers();
+            }
+        });
+
+        lucide.createIcons();
+
+
+        let allMembers = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        emailjs.init("4a8IMYbiA9pj9AxcW");
+        const EMAILJS_SERVICE_ID = "service_vgxklhd";
+        const EMAILJS_TEMPLATE_WELCOME = "template_xak0tup";
+        const EMAILJS_TEMPLATE_DIGEST = "template_bi98ab7";
+        const ADMIN_EMAIL = "sanusibayero6@gmail.com";
+
+
+        // ========================================================
+        // INIT
+        // ========================================================
+        function init() {
+            fetchMembers();
+            setupSearch();
+            scheduleDailyDigest(); // auto-send at 6 PM WAT
+        }
+
+        // ========================================================
+        // FETCH MEMBERS
+        // ========================================================
+
+        // Ensure the function is marked as 'async'
+        async function fetchMembers() {
+            try {
+                const membersRef = collection(db, "members");
+                const q = query(membersRef, orderBy("createdAt", "desc"));
+
+                // Await the promise
+                const snapshot = await getDocs(q);
+
+                allMembers = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                updateStats();
+                renderFiltered();
+                updatePendingBadge();
+
+            } catch (err) {
+                console.error(err);
+                showToast("Failed to load members", "error");
+            }
+        }
+
+        function updateStats() {
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const pending = allMembers.filter(m => m.status !== "Verified Active").length;
+            const verified = allMembers.filter(m => m.status === "Verified Active").length;
+            const todayCount = allMembers.filter(m => { if (!m.createdAt) return false; const d = new Date(m.createdAt.seconds * 1000); d.setHours(0, 0, 0, 0); return d.getTime() === today.getTime(); }).length;
+            document.getElementById('stat-total').textContent = allMembers.length;
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-verified').textContent = verified;
+            document.getElementById('stat-today').textContent = todayCount;
+        }
+
+        function updatePendingBadge() {
+            const count = allMembers.filter(m => m.status === "Pending Verification").length;
+            const btn = document.getElementById('pending-alert-btn');
+            const badge = document.getElementById('pending-badge');
+            if (count > 0) { btn.classList.remove('hidden'); badge.textContent = count; }
+            else { btn.classList.add('hidden'); }
+        }
+
+        // ========================================================
+        // RENDER
+        // ========================================================
+        function renderFiltered() {
+            let list = allMembers;
+            if (currentFilter !== 'all') list = list.filter(m => m.status === currentFilter);
+            if (currentSearch) {
+                const q = currentSearch.toLowerCase();
+                list = list.filter(m => (m.fullName || '').toLowerCase().includes(q) || (m.phone || '').includes(q) || (m.memberId || '').toLowerCase().includes(q) || (m.email || '').toLowerCase().includes(q));
+            }
+            render(list);
+        }
+
+        function render(list) {
+            const tbody = document.getElementById("tbody");
+            if (!list.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-gray-400">No members found</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = list.map(m => {
+                const photo = m.photo
+                    ? `<img src="${m.photo}" alt="${m.fullName}" class="w-10 h-10 rounded-full object-cover border border-gray-200 flex-shrink-0" onerror="this.outerHTML='<div class=\\'w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold flex-shrink-0\\'>${(m.fullName || 'N')[0]}</div>'">`
+                    : `<div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold flex-shrink-0">${(m.fullName || 'N')[0]}</div>`;
+
+                const isVerified = m.status === "Verified Active";
+                const hasReceipt = !!m.receipt;
+                const receiptBtn = hasReceipt
+                    ? `<button data-id="${m.id}" class="view-receipt-btn text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 underline underline-offset-2"><i data-lucide="image" class="w-3 h-3"></i>View Receipt</button>`
+                    : `<span class="text-xs text-gray-400 italic">No file</span>`;
+
+                const dateStr = m.createdAt ? new Date(m.createdAt.seconds * 1000).toLocaleDateString('en-NG') : '-';
+
+                return `
+                <tr class="hover:bg-emerald-50/40 transition-colors duration-150 ${!isVerified ? 'bg-amber-50/30' : ''}">
+                    <td class="p-4">
+                        <div class="flex items-center gap-3">
+                            ${photo}
+                            <div>
+                                <div class="font-semibold text-gray-900">${m.fullName || "N/A"}</div>
+                                <div class="text-xs text-gray-500 font-mono">${m.memberId || ""}</div>
+                                <div class="text-xs text-gray-400">${dateStr}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <div class="text-gray-900">${m.phone || "N/A"}</div>
+                        <div class="text-xs text-gray-500">${m.email || ""}</div>
+                    </td>
+                    <td class="p-4 text-sm">
+                        <span class="font-medium text-gray-800">${m.state || "-"}</span>
+                        <span class="text-gray-400 mx-1">/</span>
+                        <span class="text-gray-600">${m.lga || "-"}</span>
+                    </td>
+                    <td class="p-4">
+                        <div class="text-xs text-gray-600 mb-1">Ref: <span class="font-mono font-medium">${m.paymentRef || "N/A"}</span></div>
+                        <div class="text-xs text-gray-500 mb-1">Date: ${m.paymentDate || "-"} · ₦${m.paymentAmount || "-"}</div>
+                        ${receiptBtn}
+                    </td>
+                    <td class="p-4">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full ${isVerified ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            <span class="w-1.5 h-1.5 rounded-full ${isVerified ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}"></span>
+                            ${m.status || "Pending"}
+                        </span>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-2 justify-end">
+    
+    ${!isVerified ? `
+        <button data-id="${m.id}" class="verify-btn bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shadow-sm flex items-center gap-1">
+            <i data-lucide="check" class="w-3 h-3"></i> Verify
+        </button>
+    ` : `
+        <button data-id="${m.id}" class="preview-card-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+            <i data-lucide="id-card" class="w-3 h-3"></i> ID Card
+        </button>
+    `}
+
+    <button data-id="${m.id}" class="delete-btn bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">
+        Delete
+    </button>
+
+</div>
+                    </td>
+                </tr>`;
+            }).join("");
+            lucide.createIcons();
+        }
+
+        // ========================================================
+        // FILTER & SEARCH
+        // ========================================================
+        function filterByStatus(status) {
+            currentFilter = status;
+            ['all', 'Pending Verification', 'Verified Active'].forEach(s => {
+                const key = s === 'all' ? 'tab-all' : s === 'Pending Verification' ? 'tab-pending' : 'tab-verified';
+                const el = document.getElementById(key);
+                if (!el) return;
+                if (s === status) { el.classList.add('bg-white', 'shadow-sm'); el.classList.remove('text-gray-600'); el.classList.add('text-emerald-700'); }
+                else { el.classList.remove('bg-white', 'shadow-sm'); el.classList.remove('text-emerald-700'); el.classList.add('text-gray-600'); }
+            });
+            renderFiltered();
+        }
+
+        function setupSearch() {
+            let debounce;
+            document.getElementById('search').addEventListener('input', e => {
+                clearTimeout(debounce);
+                debounce = setTimeout(() => { currentSearch = e.target.value.trim(); renderFiltered(); }, 300);
+            });
+        }
+
+        // ========================================================
+        // EVENT DELEGATION — verify, view receipt, preview card
+        // ========================================================
+        document.addEventListener("click", async e => {
+
+            // FIND THIS SECTION in your event listener
+            const verifyBtn = e.target.closest(".verify-btn");
+            if (verifyBtn) {
+                const id = verifyBtn.dataset.id;
+                const member = allMembers.find(m => m.id === id);
+                if (!member) return;
+
+                // REPLACE THE ENTIRE TRY/CATCH BLOCK HERE WITH JUST THIS ONE LINE:
+                await verifyMember(member);
+
+                return;
+            }
+
+            // VIEW RECEIPT
+            const receiptBtn = e.target.closest(".view-receipt-btn");
+            if (receiptBtn) {
+                const id = receiptBtn.dataset.id;
+                const member = allMembers.find(m => m.id === id);
+                if (!member || !member.receipt) return;
+                openReceiptLightbox(member.receipt, member.receiptFilename || "receipt");
+                return;
+            }
+
+            // PREVIEW ID CARD
+            const previewBtn = e.target.closest(".preview-card-btn");
+            if (previewBtn) {
+                const id = previewBtn.dataset.id;
+                const member = allMembers.find(m => m.id === id);
+                if (!member) return;
+                openPrintPreview(member);
+                return;
+            }
+
+            const deleteBtn = e.target.closest(".delete-btn");
+            if (deleteBtn) {
+                const id = deleteBtn.dataset.id;
+
+                if (!confirm("Are you sure you want to delete this member?")) return;
+
+                await deleteMember(id);
+                return;
+            }
+        });
+
+        async function deleteMember(memberId) {
+
+            try {
+                // Always delete the Firestore record
+                await deleteDoc(doc(db, "members", memberId));
+
+                showToast("Member record deleted", "success");
+                fetchMembers();
+            } catch (err) {
+                console.error("Critical error:", err);
+                showToast("Error deleting member", "error");
+            }
+        }
+
+        // ========================================================
+        // GENERATE & UPLOAD ID CARD
+        // ========================================================
+        async function generateIDCard(member) {
+            // 1. Fill data
+            document.getElementById('print-card-name').textContent = member.fullName || "";
+            document.getElementById('print-card-id').textContent = member.memberId || "";
+            document.getElementById('print-card-state').textContent = member.state || "";
+
+            const photoEl = document.getElementById('print-card-photo');
+            if (member.photo) {
+                photoEl.src = member.photo;
+                photoEl.classList.remove('hidden');
+                await new Promise(res => { photoEl.onload = res; photoEl.onerror = res; });
+            }
+
+            const qrData = `NRO Member\nName: ${member.fullName}\nID: ${member.memberId}\nState: ${member.state}\nStatus: ACTIVE`;
+            await QRCode.toCanvas(document.getElementById('qr'), qrData, { width: 64, margin: 1 });
+
+            // 2. Show the overlay but mark it as capturing (hides buttons via CSS)
+            const container = document.getElementById("print-card-container");
+            const card = document.getElementById("print-id-card");
+
+            container.classList.add("is-capturing");
+            container.classList.remove("hidden");
+            container.classList.add("flex");
+
+            // 3. Wait for fonts + layout to fully settle
+            await document.fonts.ready;
+            await new Promise(res => setTimeout(res, 800));
+
+            // 4. Get exact rendered size of the INNER card only
+            const rect = card.getBoundingClientRect();
+
+            // 5. Capture ONLY the inner card (not the dark overlay)
+            const canvas = await window.html2canvas(card, {
+                scale: 3,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: null,
+                width: rect.width,
+                height: rect.height,
+                x: 0,
+                y: 0,
+                scrollX: -window.scrollX,
+                scrollY: -window.scrollY,
+                windowWidth: document.documentElement.offsetWidth,
+                windowHeight: document.documentElement.offsetHeight,
+                ignoreElements: (el) => el.tagName === 'BUTTON' // skip buttons
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            // 6. Cleanup
+            container.classList.remove("is-capturing");
+            container.classList.add("hidden");
+            container.classList.remove("flex");
+
+            // 7. Build PDF - A4 size with card centered
+            const { jsPDF } = window.jspdf;
+            const pxToMm = px => px * 0.264583;
+            const cardWidthMm = pxToMm(400);   // card width in mm
+            const cardHeightMm = pxToMm(250);  // card height in mm
+
+            const a4Width = 210;   // A4 portrait width in mm
+            const a4Height = 297;  // A4 portrait height in mm
+
+            // Center the card on the A4 page
+            const xOffset = (a4Width - cardWidthMm) / 2;
+            const yOffset = (a4Height - cardHeightMm) / 2;
+
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "a4"
+            });
+
+            // Card image centered on page
+            pdf.addImage(imgData, "PNG", xOffset, yOffset, cardWidthMm, cardHeightMm);
+
+            // Timestamp below the card
+            const now = new Date().toLocaleString();
+            pdf.setFontSize(8);
+            pdf.setTextColor(150);
+            pdf.text(`Printed: ${now}`, xOffset, yOffset + cardHeightMm + 5);
+
+            return pdf.output("blob");
+        }
+
+        // 2. UPDATED UPLOAD FUNCTION
+        async function uploadToTempHost(pdfBlob) {
+            // 1. Get an available server from GoFile
+            const serverResponse = await fetch("https://api.gofile.io/servers", {
+                method: "GET"
+            });
+            const serverData = await serverResponse.json();
+
+            // Pick the first available server
+            const serverUrl = `https://${serverData.data.servers[0].name}.gofile.io/contents/uploadfile`;
+
+            // 2. Upload the file
+            const formData = new FormData();
+            formData.append("file", pdfBlob, "ID_Card.pdf");
+
+            const uploadResponse = await fetch(serverUrl, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await uploadResponse.json();
+
+            if (result.status === "ok") {
+                return result.data.downloadPage;
+            } else {
+                throw new Error("GoFile upload failed: " + result.status);
+            }
+        }
+
+        // ========================================================
+        // SEND WELCOME EMAIL
+        // ========================================================
+        async function sendWelcomeEmail(member) {
+            try {
+                showToast("Generating ID card...", "info");
+                const pdfBlob = await generateIDCard(member);
+
+                showToast("Uploading card...", "info");
+                const downloadLink = await uploadToTempHost(pdfBlob);
+
+                if (!downloadLink || !downloadLink.startsWith('http')) {
+                    throw new Error("Invalid download link received from GoFile");
+                }
+
+                showToast("Sending email...", "info");
+
+                const emailParams = {
+                    to_email: member.email,
+                    to_name: `${member.title || ''} ${member.fullName}`.trim(),
+                    pdf_link: downloadLink
+                };
+
+                // Retry up to 3 times with delay
+                let lastError;
+                for (let attempt = 1; attempt <= 3; attempt++) {
+                    try {
+                        console.log(`EmailJS attempt ${attempt}/3...`);
+
+                        // Race between EmailJS and a 15s timeout
+                        const response = await Promise.race([
+                            emailjs.send(
+                                EMAILJS_SERVICE_ID,
+                                EMAILJS_TEMPLATE_WELCOME,
+                                emailParams
+                            ),
+                            new Promise((_, reject) =>
+                                setTimeout(() => reject(new Error("Request timed out after 15s")), 15000)
+                            )
+                        ]);
+
+                        console.log("EmailJS response:", response);
+                        showToast("Welcome email sent successfully!", "success");
+                        return; // Success — exit
+
+                    } catch (err) {
+                        lastError = err;
+                        console.warn(`Attempt ${attempt} failed:`, err);
+
+                        if (attempt < 3) {
+                            showToast(`Attempt ${attempt} failed, retrying...`, "info");
+                            await new Promise(res => setTimeout(res, 3000)); // wait 3s before retry
+                        }
+                    }
+                }
+
+                // All 3 attempts failed
+                throw lastError;
+
+            } catch (err) {
+                console.error("All attempts failed:", err);
+
+                if (err.message?.includes("timed out")) {
+                    showToast("Email server not responding. Check your internet connection.", "error");
+                } else if (err.text || err.status) {
+                    showToast(`Email failed: ${err.text || err.status}`, "error");
+                } else {
+                    showToast("Email failed: " + (err.message || "Unknown error"), "error");
+                }
+            }
+        }
+
+        //=========================================================
+        //
+        //=========================================================
+        // Remove the sendWelcomeEmail network dependencies
+        async function verifyMember(member) {
+            const verifyBtn = document.querySelector(`[data-id="${member.id}"].verify-btn`);
+
+            try {
+                if (verifyBtn) {
+                    verifyBtn.disabled = true;
+                    verifyBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin inline"></i> Verifying...`;
+                    lucide.createIcons();
+                }
+
+                // STEP 1: Generate PDF
+                showToast("Generating ID card...", "info");
+                const pdfBlob = await generateIDCard(member);
+
+                // STEP 2: Upload to GoFile
+                showToast("Uploading ID card...", "info");
+                let downloadLink;
+                try {
+                    downloadLink = await uploadToTempHost(pdfBlob);
+                    if (!downloadLink?.startsWith('http')) throw new Error("Invalid link from GoFile");
+                } catch (uploadErr) {
+                    throw new Error("Upload failed: " + uploadErr.message);
+                }
+
+                // STEP 3: Send email FIRST — before touching Firestore
+                // If email fails, member is NOT verified yet (no ghost verification)
+                showToast("Sending welcome email...", "info");
+                let emailSent = false;
+                let lastEmailError;
+
+                for (let attempt = 1; attempt <= 3; attempt++) {
+                    try {
+                        console.log(`EmailJS attempt ${attempt}/3...`);
+                        const response = await Promise.race([
+                            emailjs.send(
+                                EMAILJS_SERVICE_ID,
+                                EMAILJS_TEMPLATE_WELCOME,
+                                {
+                                    to_email: member.email,
+                                    to_name: `${member.title || ''} ${member.fullName}`.trim(),
+                                    pdf_link: downloadLink
+                                }
+                            ),
+                            new Promise((_, reject) =>
+                                setTimeout(() => reject(new Error("EmailJS timed out after 15s")), 15000)
+                            )
+                        ]);
+
+                        console.log("EmailJS success:", response);
+                        emailSent = true;
+                        break; // exit retry loop
+
+                    } catch (err) {
+                        lastEmailError = err;
+                        console.warn(`Email attempt ${attempt} failed:`, err);
+                        if (attempt < 3) {
+                            showToast(`Email attempt ${attempt} failed, retrying...`, "info");
+                            await new Promise(res => setTimeout(res, 3000));
+                        }
+                    }
+                }
+
+                // If email completely failed, stop here — do NOT verify
+                if (!emailSent) {
+                    throw new Error("Email delivery failed after 3 attempts: " + (lastEmailError?.message || "Unknown error"));
+                }
+
+                // STEP 4: Only update Firestore AFTER email succeeds
+                await updateDoc(doc(db, "members", member.id), {
+                    status: "Verified Active",
+                    verifiedAt: new Date().toISOString()
+                });
+                member.status = "Verified Active";
+
+                // STEP 5: Auto-download PDF for admin records
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${member.fullName}_ID_Card.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+                showToast("✓ Verified, email sent & card downloaded!", "success");
+
+                // STEP 6: Refresh table
+                fetchMembers();
+
+            } catch (err) {
+                console.error("Verification failed:", err);
+
+                // Specific error messages
+                if (err.message?.includes("Upload failed")) {
+                    showToast("ID card upload failed. Check internet and retry.", "error");
+                } else if (err.message?.includes("Email delivery failed")) {
+                    showToast("Email failed — member NOT verified. Fix email config and retry.", "error");
+                } else if (err.message?.includes("timed out")) {
+                    showToast("Connection timed out. Check internet and retry.", "error");
+                } else {
+                    showToast("Verification failed: " + (err.message || "Unknown error"), "error");
+                }
+
+                // Reset button on any failure
+                if (verifyBtn) {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = `Verify`;
+                }
+            }
+        }
+        // ========================================================
+        // PRINT PREVIEW
+        // ========================================================
+        function openPrintPreview(member) {
+            // 1. Fill data
+            document.getElementById('print-card-name').textContent = member.fullName || "";
+            document.getElementById('print-card-id').textContent = member.memberId || "";
+            document.getElementById('print-card-state').textContent = member.state || "";
+            if (member.photo) {
+                document.getElementById('print-card-photo').src = member.photo;
+                document.getElementById('print-card-photo').classList.remove('hidden');
+            }
+
+            const qrData = `NRO Member\nName: ${member.fullName}\nID: ${member.memberId}\nState: ${member.state}\nStatus: ACTIVE`;
+            QRCode.toCanvas(document.getElementById('qr'), qrData, { width: 64, margin: 1 });
+
+            // 2. Show container
+            const container = document.getElementById('print-card-container');
+            container.classList.remove('hidden');
+            container.classList.add('flex');
+
+            // 3. Optional: Add a special class to the body for printing
+            document.body.classList.add('is-printing');
+        }
+
+        function closePrintPreview() {
+            document.getElementById('print-card-container').classList.add('hidden');
+            document.getElementById('print-card-container').classList.remove('flex');
+            document.body.classList.remove('is-printing');
+        }
+
+
+
+        // ========================================================
+        // RECEIPT LIGHTBOX
+        // ========================================================
+        function openReceiptLightbox(dataUrl, filename) {
+            const img = document.getElementById('receipt-img');
+            const pdfMsg = document.getElementById('receipt-pdf-msg');
+            const pdfLink = document.getElementById('receipt-pdf-link');
+
+            if (dataUrl.includes('application/pdf') || (filename && filename.toLowerCase().endsWith('.pdf'))) {
+                img.classList.add('hidden');
+                pdfMsg.classList.remove('hidden');
+                pdfLink.href = dataUrl;
+            } else {
+                img.src = dataUrl;
+                img.classList.remove('hidden');
+                pdfMsg.classList.add('hidden');
+            }
+            document.getElementById('receipt-lightbox').classList.remove('hidden');
+            document.getElementById('receipt-lightbox').classList.add('flex');
+        }
+
+        function closeReceiptLightbox() {
+            document.getElementById('receipt-lightbox').classList.add('hidden');
+            document.getElementById('receipt-lightbox').classList.remove('flex');
+        }
+
+        // ========================================================
+        // EXPORT CSV
+        // ========================================================
+        function exportCSV() {
+            const headers = ["Title", "Full Name", "Date of Birth", "Marital Status", "Gender", "Phone", "NIN", "WhatsApp", "Email", "Address", "State", "LGA", "Ward", "Profession", "Education", "Member ID", "Payment Date", "Payment Amount", "Payment Ref", "Status", "Registration Date"];
+            const clean = v => { if (v === undefined || v === null) return ""; return `"${String(v).replace(/"/g, '""')}"`; };
+            const rows = allMembers.map(m => [
+                clean(m.title), clean(m.fullName), clean(m.dob), clean(m.maritalStatus), clean(m.gender),
+                clean(m.phone), clean(m.nin), clean(m.whatsapp), clean(m.email), clean(m.address),
+                clean(m.state), clean(m.lga), clean(m.ward), clean(m.profession), clean(m.education),
+                clean(m.memberId), clean(m.paymentDate), clean(m.paymentAmount), clean(m.paymentRef),
+                clean(m.status), clean(m.createdAt ? new Date(m.createdAt.seconds * 1000).toLocaleDateString() : "")
+            ].join(","));
+
+            const csv = [headers.join(","), ...rows].join("\n");
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `NRO_Members_${new Date().toISOString().split('T')[0]}.csv`;
+            a.style.visibility = 'hidden';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+
+        // ========================================================
+        // SETTINGS
+        // ========================================================
+        function openSettings() { document.getElementById("settingsModal").classList.remove("hidden"); document.getElementById("settingsModal").classList.add("flex"); }
+        function closeSettings() { document.getElementById("settingsModal").classList.add("hidden"); document.getElementById("settingsModal").classList.remove("flex"); }
+        async function saveSettings() {
+            const username = document.getElementById("newUsername").value.trim();
+            const password = document.getElementById("newPassword").value.trim();
+            if (!username || !password) { showToast("Please fill in both fields.", "error"); return; }
+            const btn = document.getElementById("saveSettingsBtn");
+            btn.disabled = true; btn.textContent = "Saving...";
+            try {
+                await setDoc(doc(db, "admins", "adminUser"), {
+                    username,
+                    password,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                showToast("Admin credentials updated!", "success");
+                closeSettings();
+            } catch (err) {
+                showToast("Failed to update settings.", "error");
+            } finally {
+                btn.disabled = false; btn.textContent = "Save Changes";
+            }
+        }
+
+        // ========================================================
+        // TOAST
+        // ========================================================
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            const ok = type === 'success';
+            toast.className = `toast-in pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border ${ok ? 'bg-white border-emerald-100 text-emerald-800' : 'bg-white border-red-100 text-red-800'}`;
+            toast.innerHTML = `<div class="${ok ? 'bg-emerald-100 text-emerald-600' : 'bg-red-100 text-red-600'} p-1 rounded-full flex-shrink-0"><i data-lucide="${ok ? 'check-circle-2' : 'alert-circle'}" class="w-4 h-4"></i></div><p class="font-medium text-sm">${message}</p>`;
+            document.getElementById("toastContainer").appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 4000);
+        }
+
+        // ========================================================
+        // LOGOUT
+        // ========================================================
+        function logout() { auth.signOut().then(() => window.location.href = "login.html"); }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Member Table Controls
+            document.getElementById("export-csv-btn")?.addEventListener("click", exportCSV);
+            document.getElementById("refresh-members-btn")?.addEventListener("click", fetchMembers);
+
+            // Status Filter Buttons
+            document.getElementById("tab-all")?.addEventListener("click", () => filterByStatus('all'));
+            document.getElementById("tab-pending")?.addEventListener("click", () => filterByStatus('Pending Verification'));
+            document.getElementById("tab-verified")?.addEventListener("click", () => filterByStatus('Verified Active'));
+
+            // Header/Modal Controls
+            document.getElementById("logout-btn")?.addEventListener("click", logout);
+            document.getElementById("digest-btn")?.addEventListener("click", sendDailyDigest);
+            document.getElementById("open-settings-btn")?.addEventListener("click", openSettings);
+
+            // Settings Modal
+            document.getElementById("close-settings-btn")?.addEventListener("click", closeSettings);
+            document.getElementById("close-settings-x-btn")?.addEventListener("click", closeSettings);
+            document.getElementById("cancel-settings-btn")?.addEventListener("click", closeSettings);
+            document.getElementById("saveSettingsBtn")?.addEventListener("click", saveSettings);
+
+            // Print Preview
+            document.getElementById("print-btn")?.addEventListener("click", () => window.print());
+            document.getElementById("close-print-btn")?.addEventListener("click", closePrintPreview);
+
+            // Receipt Lightbox
+            document.getElementById("receipt-lightbox")?.addEventListener("click", closeReceiptLightbox);
+            document.getElementById("close-receipt-btn")?.addEventListener("click", closeReceiptLightbox);
+
+
+        });
+
+    </script>
+
+</head>
+
+<body class="bg-gray-50 text-slate-800">
+
+    <!-- Hidden ID card for generating/printing — off-screen -->
+    <div id="print-card-container" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-[200]">
+
+        <div id="print-id-card"
+            class="relative w-[400px] h-[250px] bg-[#054a33] text-white rounded-xl shadow-2xl border border-emerald-600/50 overflow-hidden p-5 flex flex-col justify-between mx-auto">
+            <div class="relative z-10 flex justify-between items-start border-b border-emerald-600 pb-3">
+                <div class="flex items-center gap-2">
+                    <img src="nro-logo.png" class="w-10 h-10 rounded-full bg-white p-0.5 shadow">
+                    <div>
+                        <h3 class="text-sm font-bold text-amber-400 uppercase">Northern Reform</h3>
+                        <p class="text-[10px] text-emerald-100 uppercase tracking-widest">Organization</p>
+                    </div>
+                </div>
+
+                <span class="text-[10px] px-2 py-1 bg-white/10 border border-white/20 rounded uppercase">
+                    Member
+                </span>
+            </div>
+
+            <!-- BODY -->
+            <div class="relative flex gap-4 mt-3 items-start">
+
+                <!-- PHOTO -->
+                <div
+                    class="w-20 h-24 rounded-md overflow-hidden border-2 border-white bg-gray-200 shadow flex-shrink-0">
+                    <img id="print-card-photo" class="w-full h-full object-cover hidden">
+                </div>
+
+                <!-- DETAILS -->
+                <div class="flex-1 space-y-2">
+
+                    <div>
+                        <p class="text-[10px] text-emerald-400 uppercase">Member Name</p>
+                        <p id="print-card-name" class="text-xs font-bold uppercase leading-tight whitespace-nowrap">
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-[10px] text-emerald-400 uppercase">Membership ID</p>
+                        <p id="print-card-id" class="font-mono text-xs"></p>
+                    </div>
+
+                    <div>
+                        <p class="text-[10px] text-emerald-400 uppercase">State</p>
+                        <p id="print-card-state" class="text-sm font-semibold uppercase"></p>
+                    </div>
+
+                </div>
+
+                <!-- QR (MOVED UP) -->
+                <div class="bg-white p-1.5 rounded-lg shadow self-start mt-9 -ml-2">
+                    <canvas id="qr" class="w-16 h-16"></canvas>
+                </div>
+
+
+            </div>
+            <div class="flex gap-3 justify-center mt-4">
+                <button onclick="window.print()"
+                    class="bg-white text-emerald-800 px-5 py-2 rounded-full font-semibold text-sm shadow flex items-center gap-2"><i
+                        data-lucide="printer" class="w-4 h-4"></i> Print</button>
+                <button id="close-print-btn"
+                    class="bg-white/20 text-white px-5 py-2 rounded-full font-semibold text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== RECEIPT LIGHTBOX ========== -->
+    <div id="receipt-lightbox" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[150] p-4">
+        <div class="relative max-w-2xl w-full" onclick="event.stopPropagation()">
+            <button id="close-receipt-btn"
+                class="absolute -top-10 right-0 text-white/70 hover:text-white flex items-center gap-1 text-sm"><i
+                    data-lucide="x" class="w-4 h-4"></i> Close</button>
+            <img id="receipt-img" class="w-full rounded-xl shadow-2xl max-h-[80vh] object-contain" src="" alt="Receipt">
+            <p id="receipt-pdf-msg" class="hidden text-white text-center py-8 text-lg">PDF receipt — <a
+                    id="receipt-pdf-link" href="#" target="_blank" class="underline text-amber-400">Open in new tab</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="bg-emerald-900 text-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center font-bold text-xl shadow-sm text-amber-950">
+                    N</div>
+                <h1 class="font-bold text-lg sm:text-xl tracking-tight">NRO Admin <span
+                        class="text-emerald-300 font-normal hidden sm:inline">Portal</span></h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <!-- Pending badge -->
+                <button id="pending-alert-btn"
+                    class="hidden relative bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                    <span>Pending</span>
+                    <span id="pending-badge"
+                        class="bg-white text-amber-700 text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button id="open-settings-btn"
+                    class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Settings</button>
+                <button id="logout-btn"
+                    class="bg-emerald-800 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                    <i data-lucide="log-out" class="w-4 h-4"></i><span class="hidden sm:inline">Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-7xl">
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 text-center">
+                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Total Members</p>
+                <p id="stat-total" class="text-2xl font-bold text-gray-900">0</p>
+            </div>
+            <div class="bg-amber-50 rounded-2xl p-4 shadow-sm border border-amber-100 text-center">
+                <p class="text-xs text-amber-600 font-medium uppercase tracking-wide mb-1">Pending Review</p>
+                <p id="stat-pending" class="text-2xl font-bold text-amber-600">0</p>
+            </div>
+            <div class="bg-emerald-50 rounded-2xl p-4 shadow-sm border border-emerald-100 text-center">
+                <p class="text-xs text-emerald-600 font-medium uppercase tracking-wide mb-1">Verified</p>
+                <p id="stat-verified" class="text-2xl font-bold text-emerald-700">0</p>
+            </div>
+            <div class="bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 text-center">
+                <p class="text-xs text-blue-600 font-medium uppercase tracking-wide mb-1">Today</p>
+                <p id="stat-today" class="text-2xl font-bold text-blue-700">0</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div class="flex items-center gap-3">
+                <h2 class="text-xl font-bold text-gray-900">Members</h2>
+                <!-- Status filter tabs -->
+                <div class="flex gap-1 bg-gray-100 rounded-lg p-1">
+                    <button id="tab-all"
+                        class="tab-btn px-3 py-1 rounded-md text-xs font-semibold text-gray-600 hover:bg-white transition-colors bg-white shadow-sm">All</button>
+                    <button id="tab-pending"
+                        class="tab-btn px-3 py-1 rounded-md text-xs font-semibold text-gray-600 hover:bg-white transition-colors">Pending</button>
+                    <button id="tab-verified"
+                        class="tab-btn px-3 py-1 rounded-md text-xs font-semibold text-gray-600 hover:bg-white transition-colors">Verified</button>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                <div class="relative flex-grow md:flex-grow-0 w-full sm:w-auto">
+                    <i data-lucide="search"
+                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                    <input id="search" placeholder="Search name, ID, phone..."
+                        class="border border-gray-200 pl-10 pr-4 py-2 rounded-xl w-full outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow text-sm">
+                </div>
+                <button id="refresh-members-btn"
+                    class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-3 py-2 rounded-xl transition-colors shadow-sm"
+                    title="Refresh">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </button>
+                <button id="export-csv-btn"
+                    class="bg-amber-500 hover:bg-amber-600 text-amber-950 font-medium px-4 py-2 rounded-xl transition-colors shadow-sm flex items-center gap-2 flex-grow sm:flex-grow-0 justify-center">
+                    <i data-lucide="download" class="w-4 h-4"></i><span>Export CSV</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="overflow-x-auto table-scroll">
+                <table class="w-full text-left whitespace-nowrap">
+                    <thead class="bg-gray-50 text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
+                        <tr>
+                            <th class="p-4 font-semibold">Member</th>
+                            <th class="p-4 font-semibold">Contact</th>
+                            <th class="p-4 font-semibold">Location</th>
+                            <th class="p-4 font-semibold">Payment Proof</th>
+                            <th class="p-4 font-semibold">Status</th>
+                            <th class="p-4 font-semibold text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" class="divide-y divide-gray-50 text-sm">
+                        <tr>
+                            <td colspan="6" class="p-10 text-center text-gray-400">
+                                <div class="flex flex-col items-center gap-2"><i data-lucide="loader-2"
+                                        class="w-6 h-6 animate-spin text-emerald-600"></i><span>Loading
+                                        members...</span></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========== SETTINGS MODAL ========== -->
+    <div id="settingsModal"
+        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-[100] backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-2xl w-full max-w-md shadow-xl border border-gray-100 m-4">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-xl font-bold text-gray-900">Admin Settings</h2>
+                <button id="close-settings-btn" class="text-gray-400 hover:text-gray-600"><i data-lucide="x"
+                        class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">New Email</label><input
+                        id="newUsername" placeholder="Enter new email"
+                        class="border border-gray-200 p-2.5 w-full rounded-xl outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">New Password</label><input
+                        id="newPassword" type="password" placeholder="Enter new password"
+                        class="border border-gray-200 p-2.5 w-full rounded-xl outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="cancel-settings-btn"
+                    class="px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-100 font-medium transition-colors">Cancel</button>
+                <button id="saveSettingsBtn"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl font-medium transition-colors shadow-sm">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 flex flex-col gap-3 z-[110] pointer-events-none max-w-xs">
+    </div>
+
+</body>
+
+</html>
